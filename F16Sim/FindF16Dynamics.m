@@ -74,7 +74,8 @@ mat_lo = [A_lo B_lo; C_lo D_lo];
 A_longitude_hi = mat_hi([3 5 7 8 11 13 14], [3 5 7 8 11 13 14]);
 A_longitude_lo = mat_lo([3 5 7 8 11 13 14], [3 5 7 8 11 13 14]);
 A_longitude_lo_red = mat_lo([5 7 8 11], [5 7 8 11]); 
-
+sys_de = ss(SS_lo(8,1));
+%A_long_lo_de = sys_de.A([5 7 8 11]);
 %% Select the components that make up the longitude B matrix
 %%
 B_longitude_hi = mat_hi([3 5 7 8 11 13 14], [19 20]);
