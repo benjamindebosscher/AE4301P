@@ -106,7 +106,7 @@ D_longitude_lo = mat_lo([21 23 25 26 29], [19 20]);
 D_long_red = [0;0;0;0;0];
 D_long_red_ac = [0;0;0;0];
 
-SS_long_lo_red_ac = ss(A_longitude_red_ac, B_long_red_ac, C_long_red_ac, D_log_red_ac);
+SS_long_lo_red_ac = ss(A_long_red_ac, B_long_red_ac, C_long_red_ac, D_long_red_ac);
 SS_long_hi = ss(A_longitude_hi, B_longitude_hi, C_longitude_hi, D_longitude_hi);
 SS_long_lo = ss(A_longitude_lo, B_longitude_lo, C_longitude_lo, D_longitude_lo);
 
