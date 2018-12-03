@@ -19,8 +19,9 @@ newline = sprintf('\n');
 
 %% Trim aircraft to desired altitude and velocity
 %%
-altitude = input('Enter the altitude for the simulation (ft)  :  ');
-velocity = input('Enter the velocity for the simulation (ft/s):  ');
+% to be replaced by input in final
+altitude = 20000; %input('Enter the altitude for the simulation (ft)  :  ');
+velocity = 300; %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -35,6 +36,7 @@ aileron = 0.01;            % aileron, degrees
 disp('Trimming High Fidelity Model:');
 fi_flag_Simulink = 1;
 [trim_state_hi, trim_thrust_hi, trim_control_hi, dLEF, xu_hi] = trim_F16(thrust, elevator, alpha, aileron, rudder, velocity, altitude);
+
 
 %% Find the state space model for the hifi model at the desired alt and vel.
 %%

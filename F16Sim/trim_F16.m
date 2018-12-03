@@ -1,3 +1,4 @@
+
 function [trim_state, trim_thrust, trim_control, dLEF, xu] = trim_F16(thrust, elevator, alpha, ail, rud, vel, alt)
 %================================================
 %     F16 nonlinear model trimming routine
