@@ -97,7 +97,7 @@ C_longitude_lo = mat_lo([21 23 25 26 29], [3 5 7 8 11 13 14]);
 C_long_red = zeros(5,5);
 C_long_red_ac = C_longitude_lo([3 4 2 5],[3 4 2 5]);
 C_long_red(1:4,1:4) = C_long_red_ac;
-C_long_red(5,:) = [0 0 0 0 180/pi];
+C_long_red(5,:) = [0 0 0 0 1];
 
 %% Select the components that make up the longitude D matrix
 %
@@ -121,12 +121,12 @@ SS_long_lo = ss(A_longitude_lo, B_longitude_lo, C_longitude_lo, D_longitude_lo);
 A_lateral_hi = mat_hi([4 6 7 9 10 12 13 15 16], [4 6 7 9 10 12 13 15 16]);
 A_lateral_lo = mat_lo([4 6 7 9 10 12 13 15 16], [4 6 7 9 10 12 13 15 16]);
 
+
 A_lat_red = zeros(6,6);
 A_lat_red_ac = A_lateral_lo([4 1 5 6 8 9],[4 1 5 6 8 9]); %6x6 matrix
 A_lat_red(1:end,:) = A_lateral_lo([4 1 5 6],[4 1 5 6 8 9]);
 A_lat_red(5,:) = [0 0 0 0 -a 0];
 A_lat_red(6,:) = [0 0 0 0 0 -a];
-
 
 
 %% Select the components that make up the lateral B matrix
