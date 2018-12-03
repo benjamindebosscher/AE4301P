@@ -93,10 +93,7 @@ C_longitude_lo = mat_lo([21 23 25 26 29], [3 5 7 8 11 13 14]);
 D_longitude_hi = mat_hi([21 23 25 26 29], [19 20]);
 D_longitude_lo = mat_lo([21 23 25 26 29], [19 20]);
 
-<<<<<<< HEAD
 SS_long_lo_red_ac = ss(A_long_red_ac, B_long_red_ac, C_long_red_ac, D_long_red_ac);
-=======
->>>>>>> parent of b3257cf... ereg
 SS_long_hi = ss(A_longitude_hi, B_longitude_hi, C_longitude_hi, D_longitude_hi);
 SS_long_lo = ss(A_longitude_lo, B_longitude_lo, C_longitude_lo, D_longitude_lo);
 
