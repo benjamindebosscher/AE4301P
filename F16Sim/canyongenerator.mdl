@@ -7,20 +7,43 @@ Model {
     Inport {
       Name		      "x"
       BusObject		      ""
-      SignalName	      "x"
       OutputFunctionCall      "off"
       SampleTime	      "-1"
       UnitExpr		      "inherit"
     }
-    NumRootOutports	    1
+    NumRootOutports	    5
     Outport {
-      Name		      "href"
+      Name		      "h"
+      BusObject		      ""
+      BusOutputAsStruct	      "off"
+      UnitExpr		      "inherit"
+    }
+    Outport {
+      Name		      "Vt"
+      BusObject		      ""
+      BusOutputAsStruct	      "off"
+      UnitExpr		      "inherit"
+    }
+    Outport {
+      Name		      "alpha"
+      BusObject		      ""
+      BusOutputAsStruct	      "off"
+      UnitExpr		      "inherit"
+    }
+    Outport {
+      Name		      "theta"
+      BusObject		      ""
+      BusOutputAsStruct	      "off"
+      UnitExpr		      "inherit"
+    }
+    Outport {
+      Name		      "q"
       BusObject		      ""
       BusOutputAsStruct	      "off"
       UnitExpr		      "inherit"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.8"
+    ComputedModelVersion    "1.10"
     NumModelReferences	    0
     NumTestPointedSignals   0
     NumProvidedFunctions    0
@@ -70,7 +93,7 @@ Model {
 	DockPosition		"Left"
 	Width			[50]
 	Height			[50]
-	Filter			[8]
+	Filter			[9]
       }
       Object {
 	$PropName		"ExplorerBarInfo"
@@ -86,8 +109,8 @@ Model {
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
 	Extents			[1875.0, 833.0]
-	ZoomFactor		[1.0]
-	Offset			[198.50000000000006, 36.799999999999983]
+	ZoomFactor		[0.99999999999999978]
+	Offset			[-287.41876164078718, 6.5999999999999179]
       }
       Object {
 	$PropName		"DockComponentsInfo"
@@ -121,9 +144,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "benja"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Dec 03 12:40:39 2018"
-  RTWModifiedTimeStamp	  465741637
-  ModelVersionFormat	  "1.%<AutoIncrement:8>"
+  LastModifiedDate	  "Mon Dec 03 17:42:35 2018"
+  RTWModifiedTimeStamp	  465759754
+  ModelVersionFormat	  "1.%<AutoIncrement:10>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "none"
@@ -1003,6 +1026,12 @@ Model {
       PreserveConstantTs      off
     }
     Block {
+      BlockType		      Demux
+      Outputs		      "4"
+      DisplayOption	      "none"
+      BusSelectionMode	      off
+    }
+    Block {
       BlockType		      Gain
       Gain		      "1"
       Multiplication	      "Element-wise(K.*u)"
@@ -1037,6 +1066,32 @@ Model {
       Interpolate	      on
     }
     Block {
+      BlockType		      Integrator
+      ExternalReset	      "none"
+      InitialConditionSource  "internal"
+      InitialCondition	      "0"
+      LimitOutput	      off
+      UpperSaturationLimit    "inf"
+      LowerSaturationLimit    "-inf"
+      WrapState		      off
+      WrappedStateUpperValue  "pi"
+      WrappedStateLowerValue  "-pi"
+      ShowSaturationPort      off
+      ShowStatePort	      off
+      AbsoluteTolerance	      "auto"
+      IgnoreLimit	      off
+      ZeroCross		      on
+      ContinuousStateAttributes	"''"
+    }
+    Block {
+      BlockType		      Mux
+      Inputs		      "4"
+      DisplayOption	      "none"
+      UseBusObject	      off
+      BusObject		      "BusObject"
+      NonVirtualBus	      off
+    }
+    Block {
       BlockType		      Outport
       Port		      "1"
       OutMin		      "[]"
@@ -1058,6 +1113,32 @@ Model {
       OutputWhenUnConnected   off
       OutputWhenUnconnectedValue "0"
       VectorParamsAs1DForOutWhenUnconnected off
+    }
+    Block {
+      BlockType		      Saturate
+      UpperLimitSource	      "Dialog"
+      UpperLimit	      "0.5"
+      LowerLimitSource	      "Dialog"
+      LowerLimit	      "-0.5"
+      LinearizeAsGain	      on
+      ZeroCross		      on
+      SampleTime	      "-1"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: Same as input"
+      LockScale		      off
+      RndMeth		      "Floor"
+    }
+    Block {
+      BlockType		      StateSpace
+      A			      "1"
+      B			      "1"
+      C			      "1"
+      D			      "1"
+      InitialCondition	      "0.0"
+      AbsoluteTolerance	      "auto"
+      ContinuousStateAttributes	"''"
+      Realization	      "auto"
     }
     Block {
       BlockType		      SubSystem
@@ -1125,6 +1206,14 @@ Model {
       SampleTime	      "-1"
       AllowDiffInputSizes     off
     }
+    Block {
+      BlockType		      TransferFcn
+      Numerator		      "[1]"
+      Denominator	      "[1 2 1]"
+      AbsoluteTolerance	      "auto"
+      ContinuousStateAttributes	"''"
+      Realization	      "auto"
+    }
   }
   System {
     Name		    "canyongenerator"
@@ -1145,25 +1234,136 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "19"
+    SIDHighWatermark	    "40"
     Block {
       BlockType		      Inport
       Name		      "x"
       SID		      "1"
-      Position		      [325, 173, 355, 187]
+      Position		      [-255, 318, -225, 332]
       ZOrder		      -1
       IconDisplay	      "Port number"
+    }
+    Block {
+      BlockType		      Demux
+      Name		      "Demux"
+      SID		      "23"
+      Ports		      [1, 5]
+      Position		      [840, 226, 845, 404]
+      ZOrder		      4
+      ShowName		      off
+      Outputs		      "5"
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      Saturate
+      Name		      "Elevator Saturation"
+      SID		      "32"
+      Ports		      [1, 1]
+      Position		      [530, 340, 560, 370]
+      ZOrder		      13
+      InputPortMap	      "u0"
+      UpperLimit	      "25"
+      LowerLimit	      "-25"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Elevator TF"
+      SID		      "35"
+      Position		      [370, 334, 440, 376]
+      ZOrder		      303
+      Numerator		      "[20.2]"
+      Denominator	      "[1 20.2]"
+    }
+    Block {
+      BlockType		      Saturate
+      Name		      "Engine Saturation"
+      SID		      "31"
+      Ports		      [1, 1]
+      Position		      [530, 260, 560, 290]
+      ZOrder		      12
+      InputPortMap	      "u0"
+      UpperLimit	      "19000"
+      LowerLimit	      "1000"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Engine TF"
+      SID		      "34"
+      Position		      [370, 257, 440, 293]
+      ZOrder		      302
+      Denominator	      "[1 1]"
+    }
+    Block {
+      BlockType		      Integrator
+      Name		      "Integrator"
+      SID		      "38"
+      Ports		      [1, 1]
+      Position		      [305, 575, 350, 615]
+      ZOrder		      306
+      BlockMirror	      on
       Port {
 	PortNumber		1
 	Name			"x"
       }
     }
     Block {
+      BlockType		      Mux
+      Name		      "Mux"
+      SID		      "22"
+      Ports		      [2, 1]
+      Position		      [655, 233, 660, 397]
+      ZOrder		      3
+      ShowName		      off
+      Inputs		      "2"
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      StateSpace
+      Name		      "State-Space F16 Model"
+      SID		      "20"
+      Ports		      [1, 1]
+      Position		      [710, 288, 800, 342]
+      ZOrder		      1
+      A			      "SS_long_lo.A"
+      B			      "SS_long_lo.B"
+      C			      "SS_long_lo.C"
+      D			      "SS_long_lo.D"
+      InitialCondition	      "0"
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum"
+      SID		      "39"
+      Ports		      [2, 1]
+      Position		      [-195, 315, -175, 335]
+      ZOrder		      307
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "|+-"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum1"
+      SID		      "40"
+      Ports		      [2, 1]
+      Position		      [25, 315, 45, 335]
+      ZOrder		      308
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "|+-"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
       BlockType		      SubSystem
       Name		      "canyon generator"
       SID		      "2"
       Ports		      [1, 1]
-      Position		      [390, 127, 535, 233]
+      Position		      [-125, 299, -35, 351]
       ZOrder		      -2
       RequestExecContextInheritance off
       Object {
@@ -1171,6 +1371,11 @@ Model {
 	$ObjectID		21
 	$ClassName		"Simulink.Mask"
 	Display			"image(imread('refalt.jpg'))"
+      }
+      Port {
+	PortNumber		1
+	Name			"href"
+	PropagatedSignals	"href"
       }
       System {
 	Name			"canyon generator"
@@ -1507,26 +1712,176 @@ Model {
     }
     Block {
       BlockType		      Outport
-      Name		      "href"
-      SID		      "18"
-      Position		      [640, 173, 670, 187]
-      ZOrder		      -3
+      Name		      "h"
+      SID		      "26"
+      Position		      [1015, 238, 1045, 252]
+      ZOrder		      7
+      IconDisplay	      "Port number"
+    }
+    Block {
+      BlockType		      Outport
+      Name		      "Vt"
+      SID		      "27"
+      Position		      [1015, 273, 1045, 287]
+      ZOrder		      8
+      Port		      "2"
+      IconDisplay	      "Port number"
+    }
+    Block {
+      BlockType		      Outport
+      Name		      "alpha"
+      SID		      "28"
+      Position		      [1015, 308, 1045, 322]
+      ZOrder		      9
+      Port		      "3"
+      IconDisplay	      "Port number"
+    }
+    Block {
+      BlockType		      Outport
+      Name		      "theta"
+      SID		      "29"
+      Position		      [1015, 343, 1045, 357]
+      ZOrder		      10
+      Port		      "4"
+      IconDisplay	      "Port number"
+    }
+    Block {
+      BlockType		      Outport
+      Name		      "q"
+      SID		      "30"
+      Position		      [1015, 378, 1045, 392]
+      ZOrder		      11
+      Port		      "5"
       IconDisplay	      "Port number"
     }
     Line {
-      Name		      "x"
-      ZOrder		      1
-      Labels		      [0, 0]
+      ZOrder		      3
+      SrcBlock		      "Mux"
+      SrcPort		      1
+      DstBlock		      "State-Space F16 Model"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      4
+      SrcBlock		      "State-Space F16 Model"
+      SrcPort		      1
+      DstBlock		      "Demux"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      6
+      SrcBlock		      "Demux"
+      SrcPort		      1
+      Points		      [10, 0]
+      Branch {
+	ZOrder			22
+	Points			[0, 300; -825, 0]
+	DstBlock		"Sum1"
+	DstPort			2
+      }
+      Branch {
+	ZOrder			21
+	DstBlock		"h"
+	DstPort			1
+      }
+    }
+    Line {
+      ZOrder		      7
+      SrcBlock		      "Demux"
+      SrcPort		      2
+      Points		      [32, 0]
+      Branch {
+	ZOrder			19
+	Points			[0, 315]
+	DstBlock		"Integrator"
+	DstPort			1
+      }
+      Branch {
+	ZOrder			18
+	DstBlock		"Vt"
+	DstPort			1
+      }
+    }
+    Line {
+      ZOrder		      8
+      SrcBlock		      "Demux"
+      SrcPort		      3
+      DstBlock		      "alpha"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      9
+      SrcBlock		      "Demux"
+      SrcPort		      4
+      DstBlock		      "theta"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      10
+      SrcBlock		      "Demux"
+      SrcPort		      5
+      DstBlock		      "q"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      11
+      SrcBlock		      "Elevator Saturation"
+      SrcPort		      1
+      DstBlock		      "Mux"
+      DstPort		      2
+    }
+    Line {
+      ZOrder		      12
+      SrcBlock		      "Engine Saturation"
+      SrcPort		      1
+      DstBlock		      "Mux"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      13
+      SrcBlock		      "Engine TF"
+      SrcPort		      1
+      DstBlock		      "Engine Saturation"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      14
+      SrcBlock		      "Elevator TF"
+      SrcPort		      1
+      DstBlock		      "Elevator Saturation"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      15
       SrcBlock		      "x"
+      SrcPort		      1
+      DstBlock		      "Sum"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      16
+      SrcBlock		      "Sum"
       SrcPort		      1
       DstBlock		      "canyon generator"
       DstPort		      1
     }
     Line {
-      ZOrder		      2
+      Name		      "x"
+      ZOrder		      17
+      Labels		      [1, 1]
+      SrcBlock		      "Integrator"
+      SrcPort		      1
+      Points		      [-485, 0]
+      DstBlock		      "Sum"
+      DstPort		      2
+    }
+    Line {
+      Name		      "href"
+      ZOrder		      20
+      Labels		      [1, 1]
       SrcBlock		      "canyon generator"
       SrcPort		      1
-      DstBlock		      "href"
+      DstBlock		      "Sum1"
       DstPort		      1
     }
   }
