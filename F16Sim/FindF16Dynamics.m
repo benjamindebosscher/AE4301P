@@ -134,13 +134,18 @@ A_lat_red(6,:) = [0 0 0 0 0 -a];
 B_lateral_hi = mat_hi([4 6 7 9 10 12 13 15 16], [19 21 22]);
 B_lateral_lo = mat_lo([4 6 7 9 10 12 13 15 16], [19 21 22]);
 
-B_lat_red = [0;0;0;0;a];
-B_lat_red_ac = B_lat_lo([3 4 2 5],[2]);
+B_lat_red = [0 0;0 0;0 0;a 0;0 a];
+B_lat_red_ac = B_lateral_lo([4 1 5 6],[2 3]);
 
 %% Select the components that make up the lateral C matrix
 %%
 C_lateral_hi = mat_hi([22 24 25 27 28 30], [4 6 7 9 10 12 13 15 16]);
 C_lateral_lo = mat_lo([22 24 25 27 28 30], [4 6 7 9 10 12 13 15 16]);
+
+C_lat_red = zeros(5,5);
+C_lat_red_ac = C_lateral_lo([3 4 2 5],[3 4 2 5]);
+C_lat_red(1:4,1:4) = C_lat_red_ac;
+C_lat_red(5,:) = [0 0 0 0 180/pi];
 
 %% Select the components that make up the lateral D matrix
 %%
