@@ -19,8 +19,9 @@ newline = sprintf('\n');
 
 %% Trim aircraft to desired altitude and velocity
 %%
-altitude = input('Enter the altitude for the simulation (ft)  :  ');
-velocity = input('Enter the velocity for the simulation (ft/s):  ');
+% to be replaced by input in final
+altitude = 20000; %input('Enter the altitude for the simulation (ft)  :  ');
+velocity = 300; %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -35,6 +36,7 @@ aileron = 0.01;            % aileron, degrees
 disp('Trimming High Fidelity Model:');
 fi_flag_Simulink = 1;
 [trim_state_hi, trim_thrust_hi, trim_control_hi, dLEF, xu_hi] = trim_F16(thrust, elevator, alpha, aileron, rudder, velocity, altitude);
+
 
 %% Find the state space model for the hifi model at the desired alt and vel.
 %%
@@ -73,23 +75,37 @@ mat_lo = [A_lo B_lo; C_lo D_lo];
 %%
 A_longitude_hi = mat_hi([3 5 7 8 11 13 14], [3 5 7 8 11 13 14]);
 A_longitude_lo = mat_lo([3 5 7 8 11 13 14], [3 5 7 8 11 13 14]);
-A_longitude_lo_red = mat_lo([5 7 8 11], [5 7 8 11]); 
-sys_de = mat_lo([7 8 5 11 19 20],[7 8 5 11 19 20]);
+
+A_long_de_red = mat_lo([7 8 5 11],[7 8 5 11]); %6x6 matrix
+a = 20.2;
+A_long_red = zeros(5,5);
+A_long_red(1:4,:) = mat_lo([7 8 5 11],[7 8 5 11 20]);
+A_long_red(5,:) = [0 0 0 0 -a];
+A_long_red_ac = mat_lo([7 8 5 11],[7 8 5 11]);
 %A_long_lo_de = sys_de.A([5 7 8 11]);
 %% Select the components that make up the longitude B matrix
 %%
 B_longitude_hi = mat_hi([3 5 7 8 11 13 14], [19 20]);
 B_longitude_lo = mat_lo([3 5 7 8 11 13 14], [19 20]);
+B_long_red = [0;0;0;0;a];
+B_long_red_ac = mat_lo([7 8 5 11],[20]);
+
 
 %% Select the components that make up the longitude C matrix
 %%
 C_longitude_hi = mat_hi([21 23 25 26 29], [3 5 7 8 11 13 14]);
 C_longitude_lo = mat_lo([21 23 25 26 29], [3 5 7 8 11 13 14]);
-
+C_long_red = zeros(5,5);
+C_long_red(1:4,1:4) = mat_lo([25 26 23 29],[7 8 5 11]);
+C_long_red(5,:) = [0 0 0 0 180/pi]; %output delevator in degrees!!
+C_long_red_ac = mat_lo([25 26 23 29],[7 8 5 11]);
 %% Select the components that make up the longitude D matrix
 %%
 D_longitude_hi = mat_hi([21 23 25 26 29], [19 20]);
 D_longitude_lo = mat_lo([21 23 25 26 29], [19 20]);
+D_long_red = [0;0;0;0;0];
+D_long_red_ac = [0;0;0;0];
+
 
 SS_long_hi = ss(A_longitude_hi, B_longitude_hi, C_longitude_hi, D_longitude_hi);
 SS_long_lo = ss(A_longitude_lo, B_longitude_lo, C_longitude_lo, D_longitude_lo);
