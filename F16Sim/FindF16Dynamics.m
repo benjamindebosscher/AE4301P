@@ -21,7 +21,7 @@ newline = sprintf('\n');
 %%
 % to be replaced by input in final
 altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
+velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -60,6 +60,13 @@ trim_state_lin = trim_state_lo; trim_thrust_lin = trim_thrust_lo; trim_control_l
 %%
 SS_hi = ss(A_hi,B_hi,C_hi,D_hi);
 SS_lo = ss(A_lo,B_lo,C_lo,D_lo);
+
+%% step inputs
+%%
+X = 0:0.01:500;
+u_de = 
+u_da = (21.5/180)*X
+u_dr = (30/180)*X
 
 
 %% Make MATLAB matrix
