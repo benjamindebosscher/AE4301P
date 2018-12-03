@@ -20,8 +20,8 @@ newline = sprintf('\n');
 %% Trim aircraft to desired altitude and velocity
 %%
 % to be replaced by input in final
-altitude = input('Enter the altitude for the simulation (ft)  :  ');
-velocity = input('Enter the velocity for the simulation (ft/s):  ');
+altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
+velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -75,27 +75,42 @@ mat_lo = [A_lo B_lo; C_lo D_lo];
 %%
 A_longitude_hi = mat_hi([3 5 7 8 11 13 14], [3 5 7 8 11 13 14]);
 A_longitude_lo = mat_lo([3 5 7 8 11 13 14], [3 5 7 8 11 13 14]);
-A_longitude_lo_red = mat_lo([5 7 8 11], [5 7 8 11]); 
-sys_de = mat_lo([7 8 5 11 19 20],[7 8 5 11 19 20]);
-%A_long_lo_de = sys_de.A([5 7 8 11]);
+
+a = 20.2;
+A_long_red = zeros(5,5);
+A_long_red_ac = A_longitude_lo([3 4 2 5],[3 4 2 5]); %6x6 matrix
+A_long_red(1:4,:) = A_longitude_lo([3 4 2 5],[3 4 2 5 7]);
+A_long_red(5,:) = [0 0 0 0 -a];
+
 %% Select the components that make up the longitude B matrix
 %%
 B_longitude_hi = mat_hi([3 5 7 8 11 13 14], [19 20]);
 B_longitude_lo = mat_lo([3 5 7 8 11 13 14], [19 20]);
+B_long_red = [0;0;0;0;a];
+B_long_red_ac = B_longitude_lo([3 4 2 5],[2]);
 
 %% Select the components that make up the longitude C matrix
 %%
 C_longitude_hi = mat_hi([21 23 25 26 29], [3 5 7 8 11 13 14]);
 C_longitude_lo = mat_lo([21 23 25 26 29], [3 5 7 8 11 13 14]);
 
+C_long_red = zeros(5,5);
+C_long_red_ac = C_longitude_lo([3 4 2 5],[3 4 2 5]);
+C_long_red(1:4,1:4) = C_long_red_ac;
+C_long_red(5,:) = [0 0 0 0 1];
+
 %% Select the components that make up the longitude D matrix
-%%
+%
 D_longitude_hi = mat_hi([21 23 25 26 29], [19 20]);
 D_longitude_lo = mat_lo([21 23 25 26 29], [19 20]);
+D_long_red = [0;0;0;0;0];
+D_long_red_ac = [0;0;0;0];
 
 SS_long_lo_red_ac = ss(A_long_red_ac, B_long_red_ac, C_long_red_ac, D_long_red_ac);
+SS_long_lo_red = ss(A_long_red, B_long_red, C_long_red, D_long_red);
 SS_long_hi = ss(A_longitude_hi, B_longitude_hi, C_longitude_hi, D_longitude_hi);
 SS_long_lo = ss(A_longitude_lo, B_longitude_lo, C_longitude_lo, D_longitude_lo);
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Lateral Directional %%%%
@@ -107,15 +122,30 @@ A_lateral_hi = mat_hi([4 6 7 9 10 12 13 15 16], [4 6 7 9 10 12 13 15 16]);
 A_lateral_lo = mat_lo([4 6 7 9 10 12 13 15 16], [4 6 7 9 10 12 13 15 16]);
 
 
+A_lat_red = zeros(6,6);
+A_lat_red_ac = A_lateral_lo([4 1 5 6 8 9],[4 1 5 6 8 9]); %6x6 matrix
+A_lat_red(1:end,:) = A_lateral_lo([4 1 5 6],[4 1 5 6 8 9]);
+A_lat_red(5,:) = [0 0 0 0 -a 0];
+A_lat_red(6,:) = [0 0 0 0 0 -a];
+
+
 %% Select the components that make up the lateral B matrix
 %%
 B_lateral_hi = mat_hi([4 6 7 9 10 12 13 15 16], [19 21 22]);
 B_lateral_lo = mat_lo([4 6 7 9 10 12 13 15 16], [19 21 22]);
 
+B_lat_red = [0 0;0 0;0 0;a 0;0 a];
+B_lat_red_ac = B_lateral_lo([4 1 5 6],[2 3]);
+
 %% Select the components that make up the lateral C matrix
 %%
 C_lateral_hi = mat_hi([22 24 25 27 28 30], [4 6 7 9 10 12 13 15 16]);
 C_lateral_lo = mat_lo([22 24 25 27 28 30], [4 6 7 9 10 12 13 15 16]);
+
+C_lat_red = zeros(5,5);
+C_lat_red_ac = C_lateral_lo([3 4 2 5],[3 4 2 5]);
+C_lat_red(1:4,1:4) = C_lat_red_ac;
+C_lat_red(5,:) = [0 0 0 0 180/pi];
 
 %% Select the components that make up the lateral D matrix
 %%
