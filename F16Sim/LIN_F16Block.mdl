@@ -1,6 +1,6 @@
 Model {
   Name			  "LIN_F16Block"
-  Version		  9.1
+  Version		  9.0
   SavedCharacterEncoding  "windows-1252"
   GraphicalInterface {
     NumRootInports	    4
@@ -40,7 +40,7 @@ Model {
       UnitExpr		      "inherit"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.165"
+    ComputedModelVersion    "1.137"
     NumModelReferences	    0
     NumTestPointedSignals   0
     NumProvidedFunctions    0
@@ -53,13 +53,11 @@ Model {
     NumExternalFileReferences 0
     OrderedModelArguments   1
   }
-  DiagnosticSuppressor	  "on"
-  SuppressorTable	  "22 serialization::archive 11 0 6 0 0 0 8 0"
-  Notes			  ""
-  NotesPlugin		  "on"
   LogicAnalyzerGraphicalSettings ""
   LogicAnalyzerPlugin	  "on"
   LogicAnalyzerSignalOrdering ""
+  DiagnosticSuppressor	  "on"
+  SuppressorTable	  "22 serialization::archive 11 0 6 0 0 0 8 0"
   CustomCodeFunctionData  ""
   SLCCPlugin		  "on"
   ScopeRefreshTime	  0.035000
@@ -90,7 +88,7 @@ Model {
 	DockPosition		"Left"
 	Width			[50]
 	Height			[50]
-	Filter			[9]
+	Filter			[8]
       }
       Object {
 	$PropName		"ExplorerBarInfo"
@@ -106,8 +104,8 @@ Model {
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
 	Extents			[1875.0, 833.0]
-	ZoomFactor		[0.99999999999999956]
-	Offset			[-30.632380952382846, -148.14666666666614]
+	ZoomFactor		[1.0]
+	Offset			[15.100952380952776, 2.3200000000002774]
       }
       Object {
 	$PropName		"DockComponentsInfo"
@@ -139,11 +137,11 @@ Model {
   Creator		  "keviczky"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "benja"
+  LastModifiedBy	  "maxhe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Nov 26 16:44:47 2018"
-  RTWModifiedTimeStamp	  465151485
-  ModelVersionFormat	  "1.%<AutoIncrement:165>"
+  LastModifiedDate	  "Mon Nov 26 11:33:20 2018"
+  RTWModifiedTimeStamp	  465132763
+  ModelVersionFormat	  "1.%<AutoIncrement:137>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "none"
@@ -164,7 +162,6 @@ Model {
   ShowViewerIcons	  on
   SortedOrder		  off
   VariantCondition	  off
-  ShowSubsystemDomainSpec off
   ExecutionContextIcon	  off
   ShowLinearizationAnnotations on
   ShowVisualizeInsertedRTB on
@@ -178,7 +175,6 @@ Model {
   BrowserShowLibraryLinks off
   FunctionConnectors	  off
   BrowserLookUnderMasks	  off
-  MultiThreadCoSim	  on
   SimulationMode	  "normal"
   VisualizeLoggedSignalsWhenLoggingToFile off
   PauseTimes		  "5"
@@ -186,8 +182,6 @@ Model {
   SnapshotBufferSize	  10
   SnapshotInterval	  10
   NumberOfLastSnapshots	  0
-  EnablePacing		  off
-  PacingRate		  1
   LinearizationMsg	  "none"
   Profile		  off
   ParamWorkspaceSource	  "MATLABWorkspace"
@@ -242,7 +236,7 @@ Model {
     Dimension		    1
     Simulink.ConfigSet {
       $ObjectID		      8
-      Version		      "1.18.0"
+      Version		      "1.17.1"
       DisabledProps	      []
       Description	      ""
       Array {
@@ -250,13 +244,12 @@ Model {
 	Dimension		9
 	Simulink.SolverCC {
 	  $ObjectID		  9
-	  Version		  "1.18.0"
+	  Version		  "1.17.1"
 	  DisabledProps		  []
 	  Description		  ""
 	  StartTime		  "0.0"
-	  StopTime		  "5"
+	  StopTime		  "20"
 	  AbsTol		  "auto"
-	  AutoScaleAbsTol	  "on"
 	  FixedStep		  "0.001"
 	  InitialStep		  "auto"
 	  MaxOrder		  5
@@ -287,11 +280,10 @@ Model {
 	  InsertRTBMode		  "Whenever possible"
 	  SampleTimeProperty	  []
 	  DecoupledContinuousIntegration off
-	  MinimalZcImpactIntegration off
 	}
 	Simulink.DataIOCC {
 	  $ObjectID		  10
-	  Version		  "1.18.0"
+	  Version		  "1.17.1"
 	  DisabledProps		  []
 	  Description		  ""
 	  Decimation		  "50"
@@ -332,7 +324,7 @@ Model {
 	}
 	Simulink.OptimizationCC {
 	  $ObjectID		  11
-	  Version		  "1.18.0"
+	  Version		  "1.17.1"
 	  Array {
 	    Type		    "Cell"
 	    Dimension		    8
@@ -391,15 +383,10 @@ Model {
 	  OptimizeDataStoreBuffers on
 	  BusAssignmentInplaceUpdate on
 	  DifferentSizesBufferReuse off
-	  OptimizationLevel	  "level2"
-	  OptimizationPriority	  "Balanced"
-	  OptimizationCustomize	  on
-	  UseRowMajorAlgorithm	  off
-	  LabelGuidedReuse	  off
 	}
 	Simulink.DebuggingCC {
 	  $ObjectID		  12
-	  Version		  "1.18.0"
+	  Version		  "1.17.1"
 	  Array {
 	    Type		    "Cell"
 	    Dimension		    1
@@ -411,7 +398,6 @@ Model {
 	  ConsistencyChecking	  "none"
 	  ArrayBoundsChecking	  "none"
 	  SignalInfNanChecking	  "none"
-	  StringTruncationChecking "error"
 	  SignalRangeChecking	  "none"
 	  ReadBeforeWriteMsg	  "UseLocalSettings"
 	  WriteAfterWriteMsg	  "UseLocalSettings"
@@ -482,7 +468,6 @@ Model {
 	  SimStateInterfaceChecksumMismatchMsg "warning"
 	  SimStateOlderReleaseMsg "error"
 	  ChecksumConsistencyForSSReuse	"none"
-	  LibraryContextMissingDiagnostic "none"
 	  InitInArrayFormatMsg	  "warning"
 	  StrictBusMsg		  "ErrorLevel1"
 	  BusNameAdapt		  "WarnAndRepair"
@@ -516,7 +501,7 @@ Model {
 	}
 	Simulink.HardwareCC {
 	  $ObjectID		  13
-	  Version		  "1.18.0"
+	  Version		  "1.17.1"
 	  DisabledProps		  []
 	  Description		  ""
 	  ProdBitPerChar	  8
@@ -564,7 +549,7 @@ Model {
 	}
 	Simulink.ModelReferenceCC {
 	  $ObjectID		  14
-	  Version		  "1.18.0"
+	  Version		  "1.17.1"
 	  DisabledProps		  []
 	  Description		  ""
 	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
@@ -583,7 +568,7 @@ Model {
 	}
 	Simulink.SFSimCC {
 	  $ObjectID		  15
-	  Version		  "1.18.0"
+	  Version		  "1.17.1"
 	  DisabledProps		  []
 	  Description		  ""
 	  SimCustomSourceCode	  ""
@@ -613,10 +598,10 @@ Model {
 	Simulink.RTWCC {
 	  $BackupClass		  "Simulink.RTWCC"
 	  $ObjectID		  16
-	  Version		  "1.18.0"
+	  Version		  "1.17.1"
 	  Array {
 	    Type		    "Cell"
-	    Dimension		    16
+	    Dimension		    13
 	    Cell		    "IncludeHyperlinkInReport"
 	    Cell		    "GenerateTraceInfo"
 	    Cell		    "GenerateTraceReport"
@@ -630,9 +615,6 @@ Model {
 	    Cell		    "GenerateMissedCodeReplacementReport"
 	    Cell		    "GenerateErtSFunction"
 	    Cell		    "CreateSILPILBlock"
-	    Cell		    "CodeExecutionProfiling"
-	    Cell		    "CodeProfilingSaveOptions"
-	    Cell		    "CodeProfilingInstrumentation"
 	    PropName		    "DisabledProps"
 	  }
 	  SystemTargetFile	  "grt.tlc"
@@ -700,10 +682,10 @@ Model {
 	    Dimension		    2
 	    Simulink.CodeAppCC {
 	      $ObjectID		      17
-	      Version		      "1.18.0"
+	      Version		      "1.17.1"
 	      Array {
 		Type			"Cell"
-		Dimension		28
+		Dimension		27
 		Cell			"IgnoreCustomStorageClasses"
 		Cell			"IgnoreTestpoints"
 		Cell			"InsertBlockDesc"
@@ -731,7 +713,6 @@ Model {
 		Cell			"CustomSymbolStrEmxFcn"
 		Cell			"CustomUserTokenString"
 		Cell			"ReqsInCode"
-		Cell			"BlockCommentType"
 		PropName		"DisabledProps"
 	      }
 	      Description	      ""
@@ -774,7 +755,6 @@ Model {
 	      InsertBlockDesc	      off
 	      InsertPolySpaceComments off
 	      SimulinkBlockComments   on
-	      BlockCommentType	      "BlockPathComment"
 	      StateflowObjectComments off
 	      MATLABSourceComments    off
 	      EnableCustomComments    off
@@ -788,7 +768,7 @@ Model {
 	    Simulink.GRTTargetCC {
 	      $BackupClass	      "Simulink.TargetCC"
 	      $ObjectID		      18
-	      Version		      "1.18.0"
+	      Version		      "1.17.1"
 	      Array {
 		Type			"Cell"
 		Dimension		15
@@ -819,7 +799,6 @@ Model {
 	      UtilityFuncGeneration   "Auto"
 	      MultiwordTypeDef	      "System defined"
 	      MultiwordLength	      2048
-	      DynamicStringBufferSize 256
 	      GenerateFullHeader      on
 	      InferredTypesCompatibility off
 	      ExistingSharedCode      ""
@@ -866,9 +845,6 @@ Model {
 	      LUTObjectStructOrderExplicitValues "Size,Breakpoints,Table"
 	      LUTObjectStructOrderEvenSpacing "Size,Breakpoints,Table"
 	      ArrayLayout	      "Column-major"
-	      ERTHeaderFileRootName   "$R$E"
-	      ERTSourceFileRootName   "$R$E"
-	      ERTDataFileRootName     "$R_data"
 	      UseMalloc		      off
 	      ExtMode		      off
 	      ExtModeStaticAlloc      off
@@ -890,7 +866,7 @@ Model {
 	}
 	SlCovCC.ConfigComp {
 	  $ObjectID		  19
-	  Version		  "1.18.0"
+	  Version		  "1.17.1"
 	  DisabledProps		  []
 	  Description		  "Simulink Coverage Configuration Component"
 	  Name			  "Simulink Coverage"
@@ -1180,7 +1156,6 @@ Model {
       Opaque		      off
       MaskHideContents	      off
       SFBlockType	      "NONE"
-      Variant		      off
       GeneratePreprocessorConditionals off
       AllowZeroVariantControls off
       PropagateVariantConditions off
@@ -1229,8 +1204,6 @@ Model {
     Location		    [-7, -7, 1543, 831]
     Open		    on
     PortBlocksUseCompactNotation off
-    SetDomainSpec	    off
-    DomainSpecType	    "Deduce"
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -1243,7 +1216,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "113"
+    SIDHighWatermark	    "106"
     Block {
       BlockType		      Inport
       Name		      "In1"
@@ -1280,6 +1253,17 @@ Model {
       IconDisplay	      "Port number"
     }
     Block {
+      BlockType		      Sum
+      Name		      "Add"
+      SID		      "105"
+      Ports		      [2, 1]
+      Position		      [715, 187, 745, 218]
+      ZOrder		      13
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
       BlockType		      SubSystem
       Name		      "Aileron\nActuator"
       SID		      "5"
@@ -1289,13 +1273,12 @@ Model {
       AncestorBlock	      "F16_Actuator_Library/Aileron\nActuator"
       LibraryVersion	      "*"
       RequestExecContextInheritance off
+      Variant		      off
       System {
 	Name			"Aileron\nActuator"
 	Location		[411, 331, 1022, 765]
 	Open			off
 	PortBlocksUseCompactNotation off
-	SetDomainSpec		off
-	DomainSpecType		"Deduce"
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1415,13 +1398,12 @@ Model {
       AncestorBlock	      "F16_Actuator_Library/Elevator\nActuator"
       LibraryVersion	      "*"
       RequestExecContextInheritance off
+      Variant		      off
       System {
 	Name			"Elevator\nActuator"
 	Location		[210, 147, 849, 557]
 	Open			off
 	PortBlocksUseCompactNotation off
-	SetDomainSpec		off
-	DomainSpecType		"Deduce"
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1573,7 +1555,7 @@ Model {
       SID		      "97"
       Position		      [605, 195, 635, 225]
       ZOrder		      9
-      Gain		      "1/32.174049"
+      Gain		      "1/9.80665"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1587,13 +1569,12 @@ Model {
       ZOrder		      -10
       BlockMirror	      on
       RequestExecContextInheritance off
+      Variant		      off
       System {
 	Name			"Leading Edge Flap"
 	Location		[44, 52, 953, 678]
 	Open			off
 	PortBlocksUseCompactNotation off
-	SetDomainSpec		off
-	DomainSpecType		"Deduce"
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1621,13 +1602,12 @@ Model {
 	  Position		  [270, 91, 455, 249]
 	  ZOrder		  -2
 	  RequestExecContextInheritance	off
+	  Variant		  off
 	  System {
 	    Name		    "Creating    qbar / ps"
 	    Location		    [164, 52, 985, 514]
 	    Open		    off
 	    PortBlocksUseCompactNotation off
-	    SetDomainSpec	    off
-	    DomainSpecType	    "Deduce"
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -2064,13 +2044,12 @@ Model {
 	  AncestorBlock		  "F16_Actuator_Library/Aileron\nActuator"
 	  LibraryVersion	  "*"
 	  RequestExecContextInheritance	off
+	  Variant		  off
 	  System {
 	    Name		    "LEF\nActuator"
 	    Location		    [411, 331, 1022, 765]
 	    Open		    off
 	    PortBlocksUseCompactNotation off
-	    SetDomainSpec	    off
-	    DomainSpecType	    "Deduce"
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -2521,13 +2500,12 @@ Model {
       AncestorBlock	      "F16_Actuator_Library/Rudder\nActuator"
       LibraryVersion	      "*"
       RequestExecContextInheritance off
+      Variant		      off
       System {
 	Name			"Rudder\nActuator"
 	Location		[340, 373, 948, 744]
 	Open			off
 	PortBlocksUseCompactNotation off
-	SetDomainSpec		off
-	DomainSpecType		"Deduce"
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -2627,20 +2605,6 @@ Model {
       }
     }
     Block {
-      BlockType		      Sum
-      Name		      "Sum"
-      SID		      "107"
-      Ports		      [2, 1]
-      Position		      [720, 165, 740, 185]
-      ZOrder		      15
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "|++"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
       BlockType		      SubSystem
       Name		      "Thrust\nModel"
       SID		      "54"
@@ -2650,13 +2614,12 @@ Model {
       AncestorBlock	      "F16_Actuator_Library/Thrust\nModel"
       LibraryVersion	      "*"
       RequestExecContextInheritance off
+      Variant		      off
       System {
 	Name			"Thrust\nModel"
 	Location		[340, 373, 948, 744]
 	Open			off
 	PortBlocksUseCompactNotation off
-	SetDomainSpec		off
-	DomainSpecType		"Deduce"
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -2770,13 +2733,12 @@ Model {
       Position		      [690, 117, 715, 143]
       ZOrder		      -17
       RequestExecContextInheritance off
+      Variant		      off
       System {
 	Name			"rad2deg"
 	Location		[150, 72, 552, 689]
 	Open			off
 	PortBlocksUseCompactNotation off
-	SetDomainSpec		off
-	DomainSpecType		"Deduce"
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -3331,11 +3293,19 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      74
+      ZOrder		      45
       SrcBlock		      "Fcn1"
       SrcPort		      1
-      DstBlock		      "Sum"
+      Points		      [9, 0; 0, 20]
+      DstBlock		      "Add"
       DstPort		      1
+    }
+    Line {
+      ZOrder		      46
+      SrcBlock		      "Gain1"
+      SrcPort		      1
+      DstBlock		      "Add"
+      DstPort		      2
     }
     Line {
       ZOrder		      47
@@ -3345,10 +3315,10 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      76
-      SrcBlock		      "Sum"
+      ZOrder		      48
+      SrcBlock		      "Add"
       SrcPort		      1
-      Points		      [40, 0; 0, -25]
+      Points		      [35, 0; 0, -55]
       DstBlock		      "Mux"
       DstPort		      2
     }
@@ -3358,14 +3328,6 @@ Model {
       SrcPort		      1
       DstBlock		      "y"
       DstPort		      1
-    }
-    Line {
-      ZOrder		      75
-      SrcBlock		      "Gain1"
-      SrcPort		      1
-      Points		      [90, 0]
-      DstBlock		      "Sum"
-      DstPort		      2
     }
     Annotation {
       SID		      "82"
