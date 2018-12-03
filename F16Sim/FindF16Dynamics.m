@@ -82,15 +82,16 @@ A_long_red_ac = A_longitude_lo([3 4 2 5],[3 4 2 5]); %4x4 matrix
 A_long_red(1:4,:) = A_longitude_lo([3 4 2 5],[3 4 2 5 7]);
 A_long_red(5,:) = [0 0 0 0 -a];
 
-A_long_red_ac_7 = A_long_red_ac([2 4],[2 4]);
-
+A_long_red_7 = zeros(3,3);
+A_long_red_7(1:2,1:3) = A_long_red([2 4],[2 4 5]);
+A_long_red_7(3,:) = [0 0 -a]
 %% Select the components that make up the longitude B matrix
 %%
 B_longitude_hi = mat_hi([3 5 7 8 11 13 14], [19 20]);
 B_longitude_lo = mat_lo([3 5 7 8 11 13 14], [19 20]);
 B_long_red = [0;0;0;0;a];
 B_long_red_ac = B_longitude_lo([3 4 2 5],[2]);
-B_long_red_ac_7 = B_long_red_ac([2 4],[1]);
+B_long_red_7 = B_long_red([2 4 5],[1]);
 %% Select the components that make up the longitude C matrix
 %%
 C_longitude_hi = mat_hi([21 23 25 26 29], [3 5 7 8 11 13 14]);
@@ -99,22 +100,24 @@ C_longitude_lo = mat_lo([21 23 25 26 29], [3 5 7 8 11 13 14]);
 C_long_red = zeros(5,5);
 C_long_red_ac = C_longitude_lo([3 4 2 5],[3 4 2 5]);
 C_long_red(1:4,1:4) = C_long_red_ac;
-C_long_red(5,:) = [0 0 0 0 1];
-C_long_red_ac_7 = C_long_red_ac([2 4],[2 4]);
+C_long_red(5,:) = [0 0 0 0 180/pi];
+C_long_red_7 = zeros(3,3);
+C_long_red_7(1:2,1:2) = C_long_red([2 4],[2 4]);
+C_long_red_7(3,:) = [0 0 180/pi];
 %% Select the components that make up the longitude D matrix
 %
 D_longitude_hi = mat_hi([21 23 25 26 29], [19 20]);
 D_longitude_lo = mat_lo([21 23 25 26 29], [19 20]);
 D_long_red = [0;0;0;0;0];
 D_long_red_ac = [0;0;0;0];
-D_long_red_ac_7 = zeros(2,1);
+D_long_red_7 = zeros(3,1);
 
 SS_long_lo_red_ac = ss(A_long_red_ac, B_long_red_ac, C_long_red_ac, D_long_red_ac);%[Vt alpha theta q]
 SS_long_lo_red = ss(A_long_red, B_long_red, C_long_red, D_long_red);
 SS_long_hi = ss(A_longitude_hi, B_longitude_hi, C_longitude_hi, D_longitude_hi);
 SS_long_lo = ss(A_longitude_lo, B_longitude_lo, C_longitude_lo, D_longitude_lo);
-SS_long_lo_red_ac_7 = ss(A_long_red_ac_7, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
-
+SS_long_lo_red_7 = ss(A_long_red_7, B_long_red_7, C_long_red_7, D_long_red_7);
+stepplot(SS_long_lo_red_7,SS_long_lo_red([2 4]),20)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Lateral Directional %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
