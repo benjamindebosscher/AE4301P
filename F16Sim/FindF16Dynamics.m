@@ -64,7 +64,7 @@ SS_lo = ss(A_lo,B_lo,C_lo,D_lo);
 %% step inputs
 %%
 X = 0:0.01:500;
-u_de = 
+%u_de = 
 u_da = (21.5/180)*X
 u_dr = (30/180)*X
 
@@ -196,6 +196,12 @@ sys_lat_lo = pck(A_lateral_lo, B_lateral_lo, C_lateral_lo, D_lateral_lo);
 long_poles_lo = spoles(sys_long_lo);
 lat_poles_lo = spoles(sys_lat_lo);
 
+%% Controller design task
+%%
+V = velocity;
+omega_n_sp = 0.03*V;
+time_c = 1/(0.75*omega_n_sp);
+damping = 0.5;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
