@@ -209,8 +209,7 @@ time_c = 1/(0.75*omega_n_sp);
 damping = 0.5;
 %% tune pitch rate command system
 %%
-[A, B, C, D] = linmod('pitch_rate_command')
-
+K = place(A_long_red_7, B_long_red_7, [-1.3716 + complex(2.37568);-1.3716 - complex(2.37568); 0]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Display results
@@ -366,6 +365,7 @@ sysg_lat_lo = frsp(sys_lat_lo,omega);
 sysg_long_hi = frsp(sys_long_hi,omega);
 sysg_long_lo = frsp(sys_long_lo,omega);
 
+%{
 figure;
 BodeCount = 0;
 for state = 1:1:5
@@ -389,3 +389,4 @@ for state = 1:1:6
         pause;
     end
 end
+%}
