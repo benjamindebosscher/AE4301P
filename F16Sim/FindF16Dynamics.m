@@ -212,6 +212,11 @@ damping = 0.5;
 poles = [complex(-1.3716, 2.375680888); complex(-1.3716, -2.375680888); complex(-20.2,0)]
 K = place(A_long_red_7, B_long_red_7, poles);
 
+v_gust = 4.572; % gust velocity in m/s
+v_ms = V*0.3048; % velocity in m/s
+alpha_gust = atan(v_gust/v_ms); % gust angle
+d_el_gust = K(1)*alpha_gust;    % elevator deflection angle in case of gust
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
