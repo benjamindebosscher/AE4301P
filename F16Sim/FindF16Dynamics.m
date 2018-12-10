@@ -197,21 +197,28 @@ sys_lat_lo = pck(A_lateral_lo, B_lateral_lo, C_lateral_lo, D_lateral_lo);
 long_poles_lo = spoles(sys_long_lo);
 lat_poles_lo = spoles(sys_lat_lo);
 
-%% Controller design task
+%% Pitch rate command controller design task
 %%
 V = velocity;
 omega_n_sp = 0.03*V;
 time_c = 1/(0.75*omega_n_sp);
 damping = 0.5;
-%% tune pitch rate command system
-%%
+g = 9.80665;
+
+% poles
 poles = [complex(-2.74, 4.75); complex(-2.74, -4.75)];
 K = place(A_long_red_ac_7, B_long_red_ac_7, poles);
 
-v_gust = 4.572; % gust velocity in m/s
-v_ms = V*0.3048; % velocity in m/s
+% gust check
+v_gust = 4.572;                 % gust velocity in m/s
+v_ms = V*0.3048;                % velocity in m/s
 alpha_gust = atan(v_gust/v_ms); % gust angle
 d_el_gust = K(1)*alpha_gust;    % elevator deflection angle in case of gust
+
+% CAP and Gibson check
+CAP = (omega_n_sp*omega_n_sp)/((V/g)*(1/time_c));       % CAP criterion
+GIB = time_c - (2*damping/omega_n_sp);                  % gibson criterion
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -224,173 +231,172 @@ clc;
 disp(sprintf('Altitude: %.3f ft.', altitude));
 disp(sprintf('Velocity: %.3f ft/s\n\n', velocity));
 
-disp('For HIFI Model:  ');
-disp('Longitudal Direction:  ');
-disp(newline);
+% disp('For HIFI Model:  ');
+% disp('Longitudal Direction:  ');
+% disp(newline);
+% 
+% disp('A =')
+% for i=1:length( A_longitude_hi(:,1) )
+%     mprintf([ A_longitude_hi(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('B =')
+% for i=1:length( B_longitude_hi(:,1) )
+%     mprintf([ B_longitude_hi(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('C =')
+% for i=1:length( C_longitude_hi(:,1) )
+%     mprintf([ C_longitude_hi(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('D =')
+% for i=1:length( D_longitude_hi(:,1) )
+%     mprintf([ D_longitude_hi(i,:) ],'  %.3e ')
+% end %for
+% 
+% rifd(long_poles_hi)
+% 
+% disp(newline);
+% 
+% disp('Lateral Direaction:  ');
+% 
+% disp(newline);
+% 
+% disp('A =')
+% for i=1:length( A_lateral_hi(:,1) )
+%     mprintf([ A_lateral_hi(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('B =')
+% for i=1:length( B_lateral_hi(:,1) )
+%     mprintf([ B_lateral_hi(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('C =')
+% for i=1:length( C_lateral_hi(:,1) )
+%     mprintf([ C_lateral_hi(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('D =')
+% for i=1:length( D_lateral_hi(:,1) )
+%     mprintf([ D_lateral_hi(i,:) ],'  %.3e ')
+% end %for
+% 
+% rifd(lat_poles_hi)
+% 
+% disp(newline);
+% disp(newline);
+% disp('For LOFI Model:  ');
+% disp('Longitudal Direction:  ');
+% disp(newline);
+% 
+% disp('A =')
+% for i=1:length( A_longitude_lo(:,1) )
+%     mprintf([ A_longitude_lo(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('B =')
+% for i=1:length( B_longitude_lo(:,1) )
+%     mprintf([ B_longitude_lo(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('C =')
+% for i=1:length( C_longitude_lo(:,1) )
+%     mprintf([ C_longitude_lo(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('D =')
+% for i=1:length( D_longitude_lo(:,1) )
+%     mprintf([ D_longitude_lo(i,:) ],'  %.3e ')
+% end %for
+% 
+% % Display the real, imaginary, frequency (magnitude) and damping ratios
+% rifd(long_poles_lo)
+% 
+% disp(newline);
+% 
+% disp('Lateral Direaction:  ');
+% 
+% disp(newline);
+% 
+% disp('A =')
+% for i=1:length( A_lateral_lo(:,1) )
+%     mprintf([ A_lateral_lo(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('B =')
+% for i=1:length( B_lateral_lo(:,1) )
+%     mprintf([ B_lateral_lo(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('C =')
+% for i=1:length( C_lateral_lo(:,1) )
+%     mprintf([ C_lateral_lo(i,:) ],'  %.3e ')
+% end %for
+% 
+% disp('D =')
+% for i=1:length( D_lateral_lo(:,1) )
+%     mprintf([ D_lateral_lo(i,:) ],'  %.3e ')
+% end %for
 
-disp('A =')
-for i=1:length( A_longitude_hi(:,1) )
-    mprintf([ A_longitude_hi(i,:) ],'  %.3e ')
-end %for
-
-disp('B =')
-for i=1:length( B_longitude_hi(:,1) )
-    mprintf([ B_longitude_hi(i,:) ],'  %.3e ')
-end %for
-
-disp('C =')
-for i=1:length( C_longitude_hi(:,1) )
-    mprintf([ C_longitude_hi(i,:) ],'  %.3e ')
-end %for
-
-disp('D =')
-for i=1:length( D_longitude_hi(:,1) )
-    mprintf([ D_longitude_hi(i,:) ],'  %.3e ')
-end %for
-
-rifd(long_poles_hi)
-
-disp(newline);
-
-disp('Lateral Direaction:  ');
-
-disp(newline);
-
-disp('A =')
-for i=1:length( A_lateral_hi(:,1) )
-    mprintf([ A_lateral_hi(i,:) ],'  %.3e ')
-end %for
-
-disp('B =')
-for i=1:length( B_lateral_hi(:,1) )
-    mprintf([ B_lateral_hi(i,:) ],'  %.3e ')
-end %for
-
-disp('C =')
-for i=1:length( C_lateral_hi(:,1) )
-    mprintf([ C_lateral_hi(i,:) ],'  %.3e ')
-end %for
-
-disp('D =')
-for i=1:length( D_lateral_hi(:,1) )
-    mprintf([ D_lateral_hi(i,:) ],'  %.3e ')
-end %for
-
-rifd(lat_poles_hi)
-
-disp(newline);
-disp(newline);
-disp('For LOFI Model:  ');
-disp('Longitudal Direction:  ');
-disp(newline);
-
-disp('A =')
-for i=1:length( A_longitude_lo(:,1) )
-    mprintf([ A_longitude_lo(i,:) ],'  %.3e ')
-end %for
-
-disp('B =')
-for i=1:length( B_longitude_lo(:,1) )
-    mprintf([ B_longitude_lo(i,:) ],'  %.3e ')
-end %for
-
-disp('C =')
-for i=1:length( C_longitude_lo(:,1) )
-    mprintf([ C_longitude_lo(i,:) ],'  %.3e ')
-end %for
-
-disp('D =')
-for i=1:length( D_longitude_lo(:,1) )
-    mprintf([ D_longitude_lo(i,:) ],'  %.3e ')
-end %for
-
-% Display the real, imaginary, frequency (magnitude) and damping ratios
-rifd(long_poles_lo)
-
-disp(newline);
-
-disp('Lateral Direaction:  ');
-
-disp(newline);
-
-disp('A =')
-for i=1:length( A_lateral_lo(:,1) )
-    mprintf([ A_lateral_lo(i,:) ],'  %.3e ')
-end %for
-
-disp('B =')
-for i=1:length( B_lateral_lo(:,1) )
-    mprintf([ B_lateral_lo(i,:) ],'  %.3e ')
-end %for
-
-disp('C =')
-for i=1:length( C_lateral_lo(:,1) )
-    mprintf([ C_lateral_lo(i,:) ],'  %.3e ')
-end %for
-
-disp('D =')
-for i=1:length( D_lateral_lo(:,1) )
-    mprintf([ D_lateral_lo(i,:) ],'  %.3e ')
-end %for
-
-% Display the real, imaginary, frequency (magnitude) and damping ratios
-rifd(lat_poles_lo)
-
-%% All Poles
-figure(1); 
-pzmap(SS_hi, 'r', SS_lo, 'b');
-title_string = sprintf('Altitude = %.2f ft Velocity = %.2f ft/s\nAll Poles\n Blue = lofi Red = hifi.', altitude, velocity);
-title(title_string);
-sgrid;
-
-%% Long. Poles
-%%
-figure(2); 
-pzmap(SS_long_hi, 'r', SS_long_lo, 'b');
-title_string = sprintf('Altitude = %.2f ft Velocity = %.2f ft/s\nLongitudal Directional Poles\n Blue = lofi Red = hifi.', altitude, velocity);
-title(title_string);
-sgrid;
-
-%% Lat. Poles
-%%
-figure(3); 
-pzmap(SS_lat_hi, 'r', SS_lat_lo, 'b');
-title_string = sprintf('Altitude = %.2f ft Velocity = %.2f ft/s\nLateral Directional Poles\n Blue = lofi Red = hifi.', altitude, velocity);
-title(title_string);
-sgrid;
-
-% Create Bode Plots
-
-omega = logspace(-2,2,100);
-
-sysg_lat_hi = frsp(sys_lat_hi,omega);
-sysg_lat_lo = frsp(sys_lat_lo,omega);
-
-sysg_long_hi = frsp(sys_long_hi,omega);
-sysg_long_lo = frsp(sys_long_lo,omega);
-
-%{
-figure;
-BodeCount = 0;
-for state = 1:1:5
-    for control = 1:1:2
-        BodeCount = BodeCount +1;
-        title_string = sprintf('Bode Plot #%d\n State = %d\n Control = %d', BodeCount,state,control);
-        vplot('bode', sel(sysg_long_hi,state,control), 'b--', sel(sysg_long_lo,state,control), 'r');
-        disp(title_string);
-        legend('hifi', 'lofi');
-        pause;
-    end
-end
-
-for state = 1:1:6
-    for control = 1:1:3
-        BodeCount = BodeCount + 1;
-        title_string = sprintf('Bode Plot #%d\n State = %d\n Control = %d', BodeCount,state,control);
-        vplot('bode', sel(sysg_lat_hi,state,control), 'b--', sel(sysg_lat_lo,state,control), 'r');
-        disp(title_string);
-        legend('hifi', 'lofi');
-        pause;
-    end
-end
-%}
+% % Display the real, imaginary, frequency (magnitude) and damping ratios
+% rifd(lat_poles_lo)
+% 
+% %% All Poles
+% figure(1); 
+% pzmap(SS_hi, 'r', SS_lo, 'b');
+% title_string = sprintf('Altitude = %.2f ft Velocity = %.2f ft/s\nAll Poles\n Blue = lofi Red = hifi.', altitude, velocity);
+% title(title_string);
+% sgrid;
+% 
+% %% Long. Poles
+% %%
+% figure(2); 
+% pzmap(SS_long_hi, 'r', SS_long_lo, 'b');
+% title_string = sprintf('Altitude = %.2f ft Velocity = %.2f ft/s\nLongitudal Directional Poles\n Blue = lofi Red = hifi.', altitude, velocity);
+% title(title_string);
+% sgrid;
+% 
+% %% Lat. Poles
+% %%
+% figure(3); 
+% pzmap(SS_lat_hi, 'r', SS_lat_lo, 'b');
+% title_string = sprintf('Altitude = %.2f ft Velocity = %.2f ft/s\nLateral Directional Poles\n Blue = lofi Red = hifi.', altitude, velocity);
+% title(title_string);
+% sgrid;
+% 
+% % Create Bode Plots
+% 
+% omega = logspace(-2,2,100);
+% 
+% sysg_lat_hi = frsp(sys_lat_hi,omega);
+% sysg_lat_lo = frsp(sys_lat_lo,omega);
+% 
+% sysg_long_hi = frsp(sys_long_hi,omega);
+% sysg_long_lo = frsp(sys_long_lo,omega);
+% 
+% 
+% figure;
+% BodeCount = 0;
+% for state = 1:1:5
+%     for control = 1:1:2
+%         BodeCount = BodeCount +1;
+%         title_string = sprintf('Bode Plot #%d\n State = %d\n Control = %d', BodeCount,state,control);
+%         vplot('bode', sel(sysg_long_hi,state,control), 'b--', sel(sysg_long_lo,state,control), 'r');
+%         disp(title_string);
+%         legend('hifi', 'lofi');
+%         pause;
+%     end
+% end
+% 
+% for state = 1:1:6
+%     for control = 1:1:3
+%         BodeCount = BodeCount + 1;
+%         title_string = sprintf('Bode Plot #%d\n State = %d\n Control = %d', BodeCount,state,control);
+%         vplot('bode', sel(sysg_lat_hi,state,control), 'b--', sel(sysg_lat_lo,state,control), 'r');
+%         disp(title_string);
+%         legend('hifi', 'lofi');
+%         pause;
+%     end
+% end
