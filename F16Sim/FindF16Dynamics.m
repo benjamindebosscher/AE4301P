@@ -21,7 +21,7 @@ newline = sprintf('\n');
 %%
 % to be replaced by input in final
 altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
+velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -93,15 +93,14 @@ A_long_red = zeros(5,5);
 A_long_red_ac = A_longitude_lo([3 4 2 5],[3 4 2 5]); %4x4 matrix
 A_long_red(1:4,:) = A_longitude_lo([3 4 2 5],[3 4 2 5 7]);
 A_long_red(5,:) = [0 0 0 0 -a];
-
 A_long_red_ac_7 = A_longitude_lo([4 5],[4 5]);
 %% Select the components that make up the longitude B matrix
 %%
 B_longitude_hi = mat_hi([3 5 7 8 11 13 14], [19 20]);
 B_longitude_lo = mat_lo([3 5 7 8 11 13 14], [19 20]);
 B_long_red = [0;0;0;0;a];
-B_long_red_ac = B_longitude_lo([3 4 2 5],[2]);
-B_long_red_ac_7 = B_longitude_lo([4 5],[2]);
+B_long_red_ac = A_longitude_lo([3 4 2 5],[7]);
+B_long_red_ac_7 = B_long_red_ac([2 4],[1]);
 
 %% Select the components that make up the longitude C matrix
 %%
@@ -206,8 +205,8 @@ time_c = 1/(0.75*omega_n_sp);
 damping = 0.5;
 %% tune pitch rate command system
 %%
-poles = [complex(-1.3716, 2.375680888); complex(-1.3716, -2.375680888); complex(-20.2,0)]
-K = place(A_long_red_7, B_long_red_7, poles);
+poles = [complex(-2.74, 4.75); complex(-2.74, -4.75)];
+K = place(A_long_red_ac_7, B_long_red_ac_7, poles);
 
 v_gust = 4.572; % gust velocity in m/s
 v_ms = V*0.3048; % velocity in m/s
