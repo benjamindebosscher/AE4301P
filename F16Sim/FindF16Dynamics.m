@@ -199,8 +199,8 @@ lat_poles_lo = spoles(sys_lat_lo);
 
 %% Pitch rate command controller design task
 %%
-V = velocity;
-omega_n_sp = 0.03*V;
+v_ms = velocity*0.3048;                % velocity in m/s
+omega_n_sp = 0.03*v_ms;
 time_c = 1/(0.75*omega_n_sp);
 damping = 0.5;
 g = 9.80665;
@@ -211,12 +211,11 @@ K = place(A_long_red_ac_7, B_long_red_ac_7, poles);
 
 % gust check
 v_gust = 4.572;                 % gust velocity in m/s
-v_ms = V*0.3048;                % velocity in m/s
 alpha_gust = atan(v_gust/v_ms); % gust angle
 d_el_gust = K(1)*alpha_gust;    % elevator deflection angle in case of gust
 
 % CAP and Gibson check
-CAP = (omega_n_sp*omega_n_sp)/((V/g)*(1/time_c));       % CAP criterion
+CAP = (omega_n_sp*omega_n_sp)/((v_ms/g)*(1/time_c));       % CAP criterion
 GIB = time_c - (2*damping/omega_n_sp);                  % gibson criterion
 
 
@@ -230,6 +229,7 @@ clc;
 
 disp(sprintf('Altitude: %.3f ft.', altitude));
 disp(sprintf('Velocity: %.3f ft/s\n\n', velocity));
+disp(sprintf('Gust elevator deflection: %.3f ft/s\n\n', d_el_gust));
 
 % disp('For HIFI Model:  ');
 % disp('Longitudal Direction:  ');
