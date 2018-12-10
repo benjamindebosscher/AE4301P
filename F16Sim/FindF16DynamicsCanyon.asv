@@ -320,6 +320,5 @@ for state = 1:1:6
     end
 end
 
-%% LQR optimization
+%% LQR optimazation
 [K,S,e]=lqr(SS_long_lo,eye(7),eye(2));
-K=-K;
