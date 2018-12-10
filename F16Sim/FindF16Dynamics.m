@@ -21,7 +21,7 @@ newline = sprintf('\n');
 %%
 % to be replaced by input in final
 altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
+velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -209,8 +209,9 @@ time_c = 1/(0.75*omega_n_sp);
 damping = 0.5;
 %% tune pitch rate command system
 %%
-K = place(A_long_red_7, B_long_red_7, [complex(-1.3716, 2.37568); complex(-1.3716, -2.37568); complex(-20.2,0)]);
-K = rad2deg(K);
+poles = [complex(-1.3716, 2.375680888); complex(-1.3716, -2.375680888); complex(-20.2,0)]
+K = place(A_long_red_7, B_long_red_7, poles);
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
