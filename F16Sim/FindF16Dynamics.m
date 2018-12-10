@@ -62,11 +62,16 @@ SS_hi = ss(A_hi,B_hi,C_hi,D_hi);
 SS_lo = ss(A_lo,B_lo,C_lo,D_lo);
 
 %% step inputs
-%%
 X = 0:0.01:500;
 %u_de = 
 u_da = (21.5/180)*X
 u_dr = (30/180)*X
+u_de = zeros(5000,1);
+u_de(1,1) = 25;
+u_dr = zeros(5000,1);
+u_dr(1,1) = 30;
+u_da = zeros(5000,1);
+u_da(1,1) = 21.5;
 
 
 %% Make MATLAB matrix
@@ -202,6 +207,9 @@ V = velocity;
 omega_n_sp = 0.03*V;
 time_c = 1/(0.75*omega_n_sp);
 damping = 0.5;
+%% tune pitch rate command system
+%%
+[A, B, C, D] = linmod('pitch_rate_command')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
