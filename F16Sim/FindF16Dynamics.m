@@ -209,7 +209,7 @@ time_c = 1/(0.75*omega_n_sp);
 damping = 0.5;
 %% tune pitch rate command system
 %%
-K = place(A_long_red_7, B_long_red_7, [-1.3716 + complex(2.37568);-1.3716 - complex(2.37568); 0]);
+K = place(A_long_red_7, B_long_red_7, [-1.3716 + complex(2.37568);-1.3716 - complex(2.37568)]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Display results
