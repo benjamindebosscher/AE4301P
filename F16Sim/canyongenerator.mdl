@@ -64,7 +64,7 @@ Model {
       UnitExpr		      "inherit"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.20"
+    ComputedModelVersion    "1.21"
     NumModelReferences	    0
     NumTestPointedSignals   0
     NumProvidedFunctions    0
@@ -160,8 +160,8 @@ Model {
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
 	Extents			[1875.0, 833.0]
-	ZoomFactor		[0.49999999999999994]
-	Offset			[-1021.1821568690143, -173.66785092574628]
+	ZoomFactor		[0.49999999999999989]
+	Offset			[-839.616780316386, -297.69654769583497]
       }
       Object {
 	$PropName		"DockComponentsInfo"
@@ -195,9 +195,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "benja"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Dec 10 18:16:50 2018"
-  RTWModifiedTimeStamp	  466366548
-  ModelVersionFormat	  "1.%<AutoIncrement:20>"
+  LastModifiedDate	  "Mon Dec 10 18:26:38 2018"
+  RTWModifiedTimeStamp	  466366707
+  ModelVersionFormat	  "1.%<AutoIncrement:21>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "none"
@@ -1289,7 +1289,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "50"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "161"
+    SIDHighWatermark	    "162"
     Block {
       BlockType		      Inport
       Name		      "theta ref\n"
@@ -1398,8 +1398,19 @@ Model {
       Name		      "Add6"
       SID		      "154"
       Ports		      [2, 1]
-      Position		      [-845, 557, -815, 588]
+      Position		      [-845, 547, -815, 578]
       ZOrder		      420
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Add7"
+      SID		      "162"
+      Ports		      [2, 1]
+      Position		      [-450, -33, -420, -2]
+      ZOrder		      433
       InputSameDT	      off
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1488,7 +1499,7 @@ Model {
       BlockType		      Constant
       Name		      "Constant"
       SID		      "94"
-      Position		      [-535, 30, -485, 60]
+      Position		      [-550, 15, -500, 45]
       ZOrder		      360
       Value		      "velocity"
     }
@@ -2070,20 +2081,6 @@ Model {
       SaturateOnIntegerOverflow	off
     }
     Block {
-      BlockType		      Sum
-      Name		      "Sum8"
-      SID		      "95"
-      Ports		      [2, 1]
-      Position		      [-465, -35, -445, -15]
-      ZOrder		      361
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "|++"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
       BlockType		      SubSystem
       Name		      "canyon generator"
       SID		      "2"
@@ -2439,7 +2436,7 @@ Model {
       BlockType		      Constant
       Name		      "x"
       SID		      "93"
-      Position		      [-940, 550, -910, 580]
+      Position		      [-940, 540, -910, 570]
       ZOrder		      359
       Value		      "0"
     }
@@ -2694,10 +2691,10 @@ Model {
       DstPort		      2
     }
     Line {
-      ZOrder		      255
+      ZOrder		      489
       SrcBlock		      "Vt ref"
       SrcPort		      1
-      DstBlock		      "Sum8"
+      DstBlock		      "Add7"
       DstPort		      1
     }
     Line {
@@ -2721,17 +2718,16 @@ Model {
       ZOrder		      129
       SrcBlock		      "Gain14"
       SrcPort		      1
-      Points		      [-120, 0; 0, -195]
+      Points		      [-145, 0; 0, -195]
       Branch {
-	ZOrder			442
-	Points			[-25, 0]
-	DstBlock		"Add6"
-	DstPort			2
-      }
-      Branch {
-	ZOrder			279
+	ZOrder			493
 	DstBlock		"Scope4"
 	DstPort			1
+      }
+      Branch {
+	ZOrder			442
+	DstBlock		"Add6"
+	DstPort			2
       }
     }
     Line {
@@ -2811,11 +2807,11 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      256
+      ZOrder		      492
       SrcBlock		      "Constant"
       SrcPort		      1
-      Points		      [25, 0]
-      DstBlock		      "Sum8"
+      Points		      [30, 0]
+      DstBlock		      "Add7"
       DstPort		      2
     }
     Line {
@@ -2881,18 +2877,19 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      330
-      SrcBlock		      "Sum8"
+      ZOrder		      490
+      SrcBlock		      "Add7"
       SrcPort		      1
-      Points		      [291, 0]
+      Points		      [266, 0]
       Branch {
-	ZOrder			428
+	ZOrder			491
+	Points			[0, -10]
 	DstBlock		"Gain9"
 	DstPort			1
       }
       Branch {
 	ZOrder			350
-	Points			[0, 660]
+	Points			[0, 650]
 	DstBlock		"Gain18"
 	DstPort			1
       }
@@ -3141,7 +3138,6 @@ Model {
       ZOrder		      441
       SrcBlock		      "Add6"
       SrcPort		      1
-      Points		      [15, 0; 0, -10]
       DstBlock		      "canyon generator"
       DstPort		      1
     }
