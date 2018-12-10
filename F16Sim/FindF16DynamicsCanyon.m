@@ -296,30 +296,39 @@ sysg_lat_lo = frsp(sys_lat_lo,omega);
 sysg_long_hi = frsp(sys_long_hi,omega);
 sysg_long_lo = frsp(sys_long_lo,omega);
 
-figure;
-BodeCount = 0;
-for state = 1:1:5
-    for control = 1:1:2
-        BodeCount = BodeCount +1;
-        title_string = sprintf('Bode Plot #%d\n State = %d\n Control = %d', BodeCount,state,control);
-        vplot('bode', sel(sysg_long_hi,state,control), 'b--', sel(sysg_long_lo,state,control), 'r');
-        disp(title_string);
-        legend('hifi', 'lofi');
-        pause;
-    end
-end
+% figure;
+% BodeCount = 0;
+% for state = 1:1:5
+%     for control = 1:1:2
+%         BodeCount = BodeCount +1;
+%         title_string = sprintf('Bode Plot #%d\n State = %d\n Control = %d', BodeCount,state,control);
+%         vplot('bode', sel(sysg_long_hi,state,control), 'b--', sel(sysg_long_lo,state,control), 'r');
+%         disp(title_string);
+%         legend('hifi', 'lofi');
+%         pause;
+%     end
+% end
+% 
+% for state = 1:1:6
+%     for control = 1:1:3
+%         BodeCount = BodeCount + 1;
+%         title_string = sprintf('Bode Plot #%d\n State = %d\n Control = %d', BodeCount,state,control);
+%         vplot('bode', sel(sysg_lat_hi,state,control), 'b--', sel(sysg_lat_lo,state,control), 'r');
+%         disp(title_string);
+%         legend('hifi', 'lofi');
+%         pause;
+%     end
+% end
 
-for state = 1:1:6
-    for control = 1:1:3
-        BodeCount = BodeCount + 1;
-        title_string = sprintf('Bode Plot #%d\n State = %d\n Control = %d', BodeCount,state,control);
-        vplot('bode', sel(sysg_lat_hi,state,control), 'b--', sel(sysg_lat_lo,state,control), 'r');
-        disp(title_string);
-        legend('hifi', 'lofi');
-        pause;
-    end
-end
+%% Row reduce
+A_rr = SS_long_lo.A(1:5,1:5);
+B_rr = SS_long_lo.A(1:5,6:7);
+C_rr = SS_long_lo.C(:,1:5);
+D_rr = SS_long_lo.D;
+
+sys_rr = ss(A_rr,B_rr,C_rr,D_rr);
+
 
 %% LQR optimization
-[K,S,e]=lqr(SS_long_lo,eye(7),eye(2));
+[K,S,e]=lqr(sys_rr,eye(5),eye(2));
 K=-K;
