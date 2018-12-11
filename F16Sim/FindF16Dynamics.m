@@ -215,10 +215,15 @@ alpha_gust = atan(v_gust/v_ms); % gust angle
 d_el_gust = K(1)*alpha_gust;    % elevator deflection angle in case of gust
 
 % CAP and Gibson check
-CAP = (omega_n_sp*omega_n_sp)/((v_ms/g)*(1/time_c));       % CAP criterion
-GIB = time_c - (2*damping/omega_n_sp);                  % gibson criterion
+CAP = (omega_n_sp*omega_n_sp)/((v_ms/g)*(1/time_c));        % CAP criterion
+GIB = time_c - (2*damping/omega_n_sp);                      % gibson criterion
 
+u0 = zeros(1,1000);
+u1 = ones(1,1000);
+u = [u1 u0];
+t = 0:0.01:19.99;
 
+lsim(-SS_long_lo_red_ac_7, u, t)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
