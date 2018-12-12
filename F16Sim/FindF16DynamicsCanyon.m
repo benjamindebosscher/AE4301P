@@ -19,8 +19,8 @@ newline = sprintf('\n');
 
 %% Trim aircraft to desired altitude and velocity
 %%
-altitude = 5000; %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 300;  %input('Enter the velocity for the simulation (ft/s):  ');
+altitude = 5000 %input('Enter the altitude for the simulation (ft)  :  ');
+velocity = 300  %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
