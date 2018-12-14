@@ -13,7 +13,7 @@ Model {
     }
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.27"
+    ComputedModelVersion    "1.28"
     NumModelReferences	    0
     NumTestPointedSignals   0
     NumProvidedFunctions    0
@@ -103,8 +103,8 @@ Model {
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
 	Extents			[1875.0, 833.0]
-	ZoomFactor		[0.85768390386016014]
-	Offset			[-461.32302989130449, 34.0118885869565]
+	ZoomFactor		[0.85772594750246112]
+	Offset			[-461.32222977603226, 34.030931330436488]
       }
       Object {
 	$PropName		"DockComponentsInfo"
@@ -138,9 +138,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "benja"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Dec 14 11:57:18 2018"
-  RTWModifiedTimeStamp	  466689015
-  ModelVersionFormat	  "1.%<AutoIncrement:27>"
+  LastModifiedDate	  "Fri Dec 14 12:11:15 2018"
+  RTWModifiedTimeStamp	  466690030
+  ModelVersionFormat	  "1.%<AutoIncrement:28>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "none"
@@ -1492,7 +1492,7 @@ Model {
       Name		      "Mux"
       SID		      "22"
       Ports		      [2, 1]
-      Position		      [640, 232, 645, 398]
+      Position		      [640, 234, 645, 396]
       ZOrder		      3
       ShowName		      off
       Inputs		      "2"
