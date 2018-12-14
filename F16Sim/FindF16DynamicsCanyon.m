@@ -330,4 +330,4 @@ sys_rr = ss(A_rr,B_rr,C_rr,D_rr);
 
 
 %% LQR optimization
-[K,S,e]=lqr(sys_rr,eye(5),eye(2));
+[K,S,e]=lqr(sys_rr.A,sys_rr.B,eye(5),eye(2));
