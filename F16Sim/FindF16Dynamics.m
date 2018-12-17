@@ -20,8 +20,8 @@ newline = sprintf('\n');
 %% Trim aircraft to desired altitude and velocity
 %%
 % to be replaced by input in final
-altitude = 10000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
+altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
+velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -199,21 +199,46 @@ lat_poles_lo = spoles(sys_lat_lo);
 [Wn_lon,zeta_lon,P_lon] = damp(SS_long_lo_red_ac);
 [Wn_lat,zeta_lat,P_lat] = damp(SS_lat_lo_red_ac);
 
+% natural frequency
 Wn_sp = Wn_lon(4);
 Wn_ph = Wn_lon(1);
 Wn_spir = Wn_lat(1);
 Wn_ap = Wn_lat(2);
 Wn_dr = Wn_lat(4);
 
+% damping ratio
 zeta_sp = zeta_lon(4)
 zeta_ph = zeta_lon(1);
 zeta_spir = zeta_lat(1);
 zeta_ap = zeta_lat(2);
 zeta_dr = zeta_lat(4);
 
+% poles
+pole_sp = P_lon(4)
+pole_ph = P_lon(1);
+pole_spir = P_lat(1);
+pole_ap = P_lat(2);
+pole_dr = P_lat(4);
+
 % short period
-% period_sp = 2*pi/cmpx
-% time_to_05_sp = log(0.5)/rel
+period_sp = 2*pi/abs(imag(pole_sp));
+time_to_05_sp = log(0.5)/real(pole_sp);
+
+% phugoid
+period_ph = 2*pi/abs(imag(pole_ph));
+time_to_05_ph = log(0.5)/real(pole_ph);
+
+% dutch roll
+period_dr = 2*pi/abs(imag(pole_dr));
+time_to_05_dr = log(0.5)/real(pole_dr);
+
+% aperiodic roll
+time_to_05_ap = log(0.5)/real(pole_ap);
+
+% spiral
+time_to_05_spir = log(0.5)/real(pole_spir);
+
+
 
 %% Pitch rate command controller design task
 %%
@@ -250,10 +275,10 @@ A_long_red_ac_77 = A_long_red_ac_7 - B_long_red_ac_7*K;
 SS_long_lo_red_ac_77 = ss(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
 
 % response of q
-lsim(SS_long_lo_red_ac_77, u, t)
+%lsim(SS_long_lo_red_ac_77, u, t)
 
 % response of theta in blue
-plot(0.01*cumtrapz(lsim(SS_long_lo_red_ac_77, u, t)))
+%plot(0.01*cumtrapz(lsim(SS_long_lo_red_ac_77, u, t)))
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
