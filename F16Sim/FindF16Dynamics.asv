@@ -114,8 +114,13 @@ SS_long_hi = ss(A_longitude_hi, B_longitude_hi, C_longitude_hi, D_longitude_hi);
 SS_long_lo = ss(A_longitude_lo, B_longitude_lo, C_longitude_lo, D_longitude_lo);
 SS_long_lo_red_ac_7 = ss(A_long_red_ac_7, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
 
-stepplot(-SS_long_lo_red_ac_7([2]),-SS_long_lo_red([4]),20)
-legend('2 state model', '4 state model')
+stepplot(-SS_long_lo_red_ac_7([2]),-SS_long_lo_red([4]),20);
+legend('2 state model', '4 state model');
+ylabel('Pitch rate q [deg/s]');
+
+stepplot(-SS_long_lo_red_ac_7([2]),-SS_long_lo_red([4]),100);
+legend('2 state model', '4 state model');
+ylabel('Pitch rate q [deg/s]');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Lateral Directional %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -198,9 +203,9 @@ g = 9.80665;
 pole_real = -omega_n_sp*damping;
 pole_cmpx = omega_n_sp*sqrt(1-damping^2);
 
-poles = [complex(pole_real, pole_cmpx); complex(pole_real, -pole_cmpx)];
+poles_placement = [complex(pole_real, pole_cmpx); complex(pole_real, -pole_cmpx)];
 
-K = place(A_long_red_ac_7, B_long_red_ac_7, poles);
+K = place(A_long_red_ac_7, B_long_red_ac_7, poles_placement);
 
 % gust check
 v_gust = 4.572;                 % gust velocity in m/s
@@ -213,10 +218,19 @@ GIB = time_c - (2*damping/omega_n_sp);                      % gibson criterion
 
 u0 = zeros(1,1000);
 u1 = ones(1,1000);
-u = [u1 u0;  ];
+u = [u1 u0];
 t = 0:0.01:19.99;
 
-lsim(-SS_long_lo_red_ac, u, t)
+% adding poles to system
+A_long_red_ac_77 = A_long_red_ac_7 - B_long_red_ac_7*K;
+SS_long_lo_red_ac_77 = ss(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
+
+% adding theta
+tf_long_lo_red_ac_77 = ss2tf(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
+tf_theta = tf_long_lo_red_ac_77(1,:); 
+
+
+lsim(SS_long_lo_red_ac_77, u, t)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
