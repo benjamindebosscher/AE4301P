@@ -19,9 +19,11 @@ newline = sprintf('\n');
 
 %% Trim aircraft to desired altitude and velocity
 %%
-altitude = 5000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 300  %input('Enter the velocity for the simulation (ft/s):  ');
+altitude = 5000; %input('Enter the altitude for the simulation (ft)  :  ');
+velocity = 300;  %input('Enter the velocity for the simulation (ft/s):  ');
 
+disp(['Altitude: ',num2str(altitude),' ft'])
+disp(['Velocity: ',num2str(velocity),' ft/s'])
 %% Initial guess for trim
 %%
 thrust = 5000;          % thrust, lbs
@@ -330,4 +332,62 @@ sys_rr = ss(A_rr,B_rr,C_rr,D_rr);
 
 
 %% LQR optimization
-[K,S,e]=lqr(sys_rr.A,sys_rr.B,eye(5),eye(2));
+Q = [1 0 0 0 0;
+     0 1 0 0 0;
+     0 0 1 0 0;
+     0 0 0 1 0;
+     0 0 0 0 1];
+R = [.005 0;
+     0 .05];
+ 
+[K,S,e]=lqr(sys_rr.A,sys_rr.B,Q,R);
+
+%% Simulation and plotting
+close all
+
+% Simulation
+sim('canyongenerator')
+
+% Plotting
+figure(1);
+plot(output_h(:,1),output_h(:,2))
+hold on;
+plot(output_href(:,1),output_href(:,2))
+xlim([0 75])
+title('Comparison between the Reference Altitude and the Actual Altitude','Fontsize',20)
+xlabel('Time [s]','Fontsize',15)
+ylabel('Altitude [ft]','Fontsize',15)
+set(gca,'Fontsize',15)
+legend('Actual Altitude','Reference Altitude')
+
+figure(2);
+plot(output_theta(:,1),output_theta(:,2))
+xlim([0 75])
+title('Pitch Angle during the Manoeuvre','Fontsize',20)
+xlabel('Time [s]','Fontsize',15)
+ylabel('Theta [deg]','Fontsize',15)
+set(gca,'Fontsize',15)
+
+figure(3);
+plot(output_Vt(:,1),output_Vt(:,2))
+xlim([0 75])
+title('True Velocity during the Manoeuvre','Fontsize',20)
+xlabel('Time [s]','Fontsize',15)
+ylabel('Velocity [ft/s]','Fontsize',15)
+set(gca,'Fontsize',15)
+
+figure(4);
+plot(output_alpha(:,1),output_alpha(:,2))
+xlim([0 75])
+title('Angle of Attack during the Manoeuvre','Fontsize',20)
+xlabel('Time [s]','Fontsize',15)
+ylabel('Angle of Attack [deg]','Fontsize',15)
+set(gca,'Fontsize',15)
+
+figure(5);
+plot(output_q(:,1),output_q(:,2))
+xlim([0 75])
+title('Pitch Rate during the Manoeuvre','Fontsize',20)
+xlabel('Time [s]','Fontsize',15)
+ylabel('Pitch Rate [rad/s]','Fontsize',15)
+set(gca,'Fontsize',15)
