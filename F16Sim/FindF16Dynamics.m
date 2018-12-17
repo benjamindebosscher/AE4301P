@@ -21,7 +21,7 @@ newline = sprintf('\n');
 %%
 % to be replaced by input in final
 altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
+velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -238,6 +238,12 @@ time_to_05_ap = log(0.5)/real(pole_ap);
 % spiral
 time_to_05_spir = log(0.5)/real(pole_spir);
 
+% longitudinal responses
+[y_lon,t_lon,x_lon] = step(SS_long_lo_red_ac);
+
+% lateral responses
+[y_lat,t_lat,x_lat] = step(SS_lat_lo_red_ac);
+
 
 
 %% Pitch rate command controller design task
@@ -273,7 +279,7 @@ t = 0:0.01:19.99;
 % placing poles to 2 state system
 A_long_red_ac_77 = A_long_red_ac_7 - B_long_red_ac_7*K;
 SS_long_lo_red_ac_77 = ss(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
-tf_77 = ss2tf(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7tf_77);
+% tf_77 = ss2tf(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7tf_77);
 
 % response of q
 %lsim(SS_long_lo_red_ac_77, u, t)
