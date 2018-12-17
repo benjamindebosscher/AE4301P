@@ -225,7 +225,12 @@ t = 0:0.01:19.99;
 A_long_red_ac_77 = A_long_red_ac_7 - B_long_red_ac_7*K;
 SS_long_lo_red_ac_77 = ss(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
 
+% response of q
 lsim(SS_long_lo_red_ac_77, u, t)
+
+% response of theta in blue
+plot(0.01*cumtrapz(lsim(SS_long_lo_red_ac_77, u, t)))
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
