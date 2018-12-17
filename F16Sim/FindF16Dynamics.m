@@ -402,8 +402,9 @@ desired = (K(2)*(1+T*s))/(s^2 + 2*damping*omega_n_sp*s + omega_n_sp^2);
 
 
 T1 = -2.183/-0.6606;
-lead = (T*s+1)/(T1*s+1);
-comp = minreal(lead*tf_77(2));
+K = 0.001;
+prefilter = K*(T*s+1)/(T1*s+1);
+comp = minreal(prefilter*tf_77(2),0.005);
 
 % tf_77 = ss2tf(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7tf_77);
 
