@@ -114,8 +114,13 @@ SS_long_hi = ss(A_longitude_hi, B_longitude_hi, C_longitude_hi, D_longitude_hi);
 SS_long_lo = ss(A_longitude_lo, B_longitude_lo, C_longitude_lo, D_longitude_lo);
 SS_long_lo_red_ac_7 = ss(A_long_red_ac_7, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
 
-stepplot(-SS_long_lo_red_ac_7([2]),-SS_long_lo_red([4]),20)
-legend('2 state model', '4 state model')
+stepplot(-SS_long_lo_red_ac_7([2]),-SS_long_lo_red([4]),20);
+legend('2 state model', '4 state model');
+ylabel('Pitch rate q [deg/s]');
+
+stepplot(-SS_long_lo_red_ac_7([2]),-SS_long_lo_red([4]),100);
+legend('2 state model', '4 state model');
+ylabel('Pitch rate q [deg/s]');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Lateral Directional %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
