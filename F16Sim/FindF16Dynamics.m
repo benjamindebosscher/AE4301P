@@ -21,7 +21,7 @@ newline = sprintf('\n');
 %%
 % to be replaced by input in final
 altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
+velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -239,11 +239,123 @@ time_to_05_ap = log(0.5)/real(pole_ap);
 time_to_05_spir = log(0.5)/real(pole_spir);
 
 % longitudinal responses
-[y_lon,t_lon,x_lon] = step(SS_long_lo_red_ac);
+[y_lon,t_lon,x_lon] = impulse(SS_long_lo_red_ac);
 
 % lateral responses
 [y_lat,t_lat,x_lat] = step(SS_lat_lo_red_ac);
 
+
+plot_switch = 3;
+% short period response
+if plot_switch == 1
+    subplot(4,1,1);
+    plot(t_lon(1:30), y_lon(1:30,1))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('Velocity in [ft/s]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,2);
+    plot(t_lon(1:30), y_lon(1:30,2))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\alpha in [deg]', 'FontSize', 12,'FontWeight','bold')
+
+    subplot(4,1,3);
+    plot(t_lon(1:30), y_lon(1:30,3))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\theta in [deg]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,4);
+    plot(t_lon(1:30), y_lon(1:30,4))
+    xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('q in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
+
+% phugoid response
+elseif plot_switch == 2
+    subplot(4,1,1);
+    plot(t_lon, y_lon(:,1))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('Velocity in [ft/s]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,2);
+    plot(t_lon, y_lon(:,2))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\alpha in [deg]', 'FontSize', 12,'FontWeight','bold')
+
+    subplot(4,1,3);
+    plot(t_lon, y_lon(:,3))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\theta in [deg]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,4);
+    plot(t_lon, y_lon(:,4))
+    xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('q in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
+ 
+%dutch roll period response
+elseif plot_switch == 3
+    subplot(4,1,1);
+    plot(t_lat, y_lat(:,1))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\beta in [deg]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,2);
+    plot(t_lat, y_lat(:,2))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\phi in [deg]', 'FontSize', 12,'FontWeight','bold')
+
+    subplot(4,1,3);
+    plot(t_lat, y_lat(:,3))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('p in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,4);
+    plot(t_lat, y_lat(:,4))
+    xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('r in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
+
+% aperiodic roll response
+elseif plot_switch == 4
+    subplot(4,1,1);
+    plot(t_lat, y_lat(:,1))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\beta in [deg]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,2);
+    plot(t_lat, y_lat(:,2))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\phi in [deg]', 'FontSize', 12,'FontWeight','bold')
+
+    subplot(4,1,3);
+    plot(t_lat, y_lat(:,3))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('p in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,4);
+    plot(t_lat, y_lat(:,4))
+    xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('r in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
+    
+% spiral response
+elseif plot_switch == 5
+    subplot(4,1,1);
+    plot(t_lat, y_lat(:,1))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\beta in [deg]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,2);
+    plot(t_lat, y_lat(:,2))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('\phi in [deg]', 'FontSize', 12,'FontWeight','bold')
+
+    subplot(4,1,3);
+    plot(t_lat, y_lat(:,3))
+    % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('p in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
+
+    subplot(4,1,4);
+    plot(t_lat, y_lat(:,4))
+    xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
+    ylabel('r in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
+end
 
 
 %% Pitch rate command controller design task
