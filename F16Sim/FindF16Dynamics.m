@@ -197,9 +197,19 @@ lat_poles_lo = spoles(sys_lat_lo);
 long_resp = impulse(SS_long_lo_red_ac);
 lat_resp = impulse(SS_lat_lo_red_ac);
 
-% period_sp = seqperiod(long_resp(:,2))
-% period_phugoid = seqperiod(long_resp(:,2))
-% period_dutch = seqperiod(lat_resp(:,2))
+margin = 0.03;
+
+out = long_resp(:,2)
+aa = 0.0001;
+aa1 = abs(long_resp(:,2)) < aa
+
+
+period_sp = 1;
+period_phugoid = 1;
+period_dutch = 1;
+
+[~,locs]=findpeaks(out);
+mean(diff(locs))
 
 %% Pitch rate command controller design task
 %%
