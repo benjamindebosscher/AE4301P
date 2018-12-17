@@ -21,7 +21,7 @@ newline = sprintf('\n');
 %%
 % to be replaced by input in final
 altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
+velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -125,7 +125,9 @@ SS_long_lo_red = ss(A_long_red, B_long_red, C_long_red, D_long_red);
 SS_long_hi = ss(A_longitude_hi, B_longitude_hi, C_longitude_hi, D_longitude_hi);
 SS_long_lo = ss(A_longitude_lo, B_longitude_lo, C_longitude_lo, D_longitude_lo);
 SS_long_lo_red_ac_7 = ss(A_long_red_ac_7, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
-stepplot(SS_long_lo_red_ac_7,SS_long_lo_red([2 4]),20)
+
+stepplot(-SS_long_lo_red_ac_7([2]),-SS_long_lo_red([4]),20)
+legend('2 state model', '4 state model')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Lateral Directional %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -148,7 +150,7 @@ B_lateral_hi = mat_hi([4 6 7 9 10 12 13 15 16], [19 21 22]);
 B_lateral_lo = mat_lo([4 6 7 9 10 12 13 15 16], [19 21 22]);
 
 B_lat_red = [0 0;0 0;0 0;0 0;a 0;0 a];
-B_lat_red_ac = B_lateral_lo([4 1 5 6],[2 3]);
+B_lat_red_ac = A_lateral_lo([4 1 5 6],[8 9]);
 
 %% Select the components that make up the lateral C matrix
 %%
