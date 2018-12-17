@@ -203,9 +203,9 @@ g = 9.80665;
 pole_real = -omega_n_sp*damping;
 pole_cmpx = omega_n_sp*sqrt(1-damping^2);
 
-poles = [complex(pole_real, pole_cmpx); complex(pole_real, -pole_cmpx)];
+poles_placement = [complex(pole_real, pole_cmpx); complex(pole_real, -pole_cmpx)];
 
-K = place(A_long_red_ac_7, B_long_red_ac_7, poles);
+K = place(A_long_red_ac_7, B_long_red_ac_7, poles_placement);
 
 % gust check
 v_gust = 4.572;                 % gust velocity in m/s
@@ -221,7 +221,11 @@ u1 = ones(1,1000);
 u = [u1 u0];
 t = 0:0.01:19.99;
 
-lsim(-SS_long_lo_red_ac, u, t)
+% adding poles to system
+A_long_red_ac_77 = A_long_red_ac_7 - B_long_red_ac_7*K;
+SS_long_lo_red_ac_77 = ss(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
+
+lsim(SS_long_lo_red_ac_77, u, t)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
