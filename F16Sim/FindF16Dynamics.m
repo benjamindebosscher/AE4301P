@@ -61,18 +61,6 @@ trim_state_lin = trim_state_lo; trim_thrust_lin = trim_thrust_lo; trim_control_l
 SS_hi = ss(A_hi,B_hi,C_hi,D_hi);
 SS_lo = ss(A_lo,B_lo,C_lo,D_lo);
 
-%% step inputs
-X = 0:0.01:500;
-%u_de = 
-u_da = (21.5/180)*X
-u_dr = (30/180)*X
-u_de = zeros(5000,1);
-u_de(1,1) = 25;
-u_dr = zeros(5000,1);
-u_dr(1,1) = 30;
-u_da = zeros(5000,1);
-u_da(1,1) = 21.5;
-
 
 %% Make MATLAB matrix
 %%
@@ -191,7 +179,6 @@ long_poles_hi = spoles(sys_long_hi);
 lat_poles_hi = spoles(sys_lat_hi);
 
 
-
 %% Make lateral direction SYSTEM matrix and Find poles for lofi
 %%
 sys_lat_lo = pck(A_lateral_lo, B_lateral_lo, C_lateral_lo, D_lateral_lo);
@@ -208,7 +195,11 @@ damping = 0.5;
 g = 9.80665;
 
 % poles
-poles = [complex(-2.74, 4.75); complex(-2.74, -4.75)];
+pole_real = -omega_n_sp*damping;
+pole_cmpx = omega_n_sp*sqrt(1-damping^2);
+
+poles = [complex(pole_real, pole_cmpx); complex(pole_real, -pole_cmpx)];
+
 K = place(A_long_red_ac_7, B_long_red_ac_7, poles);
 
 % gust check
@@ -236,7 +227,7 @@ clc;
 
 disp(sprintf('Altitude: %.3f ft.', altitude));
 disp(sprintf('Velocity: %.3f ft/s\n\n', velocity));
-disp(sprintf('Gust elevator deflection: %.3f ft/s\n\n', d_el_gust));
+disp(sprintf('Gust elevator deflection: %.3f degrees\n\n', d_el_gust));
 
 % disp('For HIFI Model:  ');
 % disp('Longitudal Direction:  ');
