@@ -20,8 +20,8 @@ newline = sprintf('\n');
 %% Trim aircraft to desired altitude and velocity
 %%
 % to be replaced by input in final
-altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
+altitude = 10000 %input('Enter the altitude for the simulation (ft)  :  ');
+velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -193,20 +193,21 @@ lat_poles_lo = spoles(sys_lat_lo);
 
 
 %% Responses & Period and T_1/2
-%%
-long_resp = impulse(SS_long_lo_red_ac);
-lat_resp = impulse(SS_lat_lo_red_ac);
+%% 
 
-margin = 0.03;
+% frequency and damping ratio could be obtained using damp(sys)
+[Wn_lon,zeta_lon,P_lon] = damp(SS_long_lo_red_ac);
+[Wn_lat,zeta_lat,P_lat] = damp(SS_lat_lo_red_ac);
 
-out = long_resp(:,2)
-aa = 0.000001*max(long_resp(:,2));
-aa1 = -aa < long_resp(:,2) < aa
+Wn_sp = Wn_lon(4);
+Wn_ph = Wn_lon(1);
+Wn_spir = Wn_lat(1);
+Wn_ap = Wn_lat(2);
+Wn_dr = 
 
-
-period_sp = 1;
-period_phugoid = 1;
-period_dutch = 1;
+% short period
+% period_sp = 2*pi/cmpx
+% time_to_05_sp = log(0.5)/rel
 
 %% Pitch rate command controller design task
 %%
