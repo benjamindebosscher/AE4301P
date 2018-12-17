@@ -20,8 +20,8 @@ newline = sprintf('\n');
 %% Trim aircraft to desired altitude and velocity
 %%
 % to be replaced by input in final
-altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
+altitude = 10000 %input('Enter the altitude for the simulation (ft)  :  ');
+velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -193,27 +193,27 @@ lat_poles_lo = spoles(sys_lat_lo);
 
 
 %% Responses & Period and T_1/2
-%%
-long_resp = impulse(SS_long_lo_red_ac);
-lat_resp = impulse(SS_lat_lo_red_ac);
+%% 
 
-locs = [];
-thetha_resp = long_resp(:,3);
-[~,locs]=findpeaks(thetha_resp);
-period_sp = mean(diff(locs));
+% frequency and damping ratio could be obtained using damp(sys)
+[Wn_lon,zeta_lon,P_lon] = damp(SS_long_lo_red_ac);
+[Wn_lat,zeta_lat,P_lat] = damp(SS_lat_lo_red_ac);
 
-locs = [];
-thetha_resp = long_resp(:,3);
-[~,locs]=findpeaks(thetha_resp);
-period_phugoid = mean(diff(locs));
+Wn_sp = Wn_lon(4);
+Wn_ph = Wn_lon(1);
+Wn_spir = Wn_lat(1);
+Wn_ap = Wn_lat(2);
+Wn_dr = Wn_lat(4);
 
-locs = [];
-thetha_resp = lat_resp(:,3);
-[~,locs]=findpeaks(thetha_resp);
-period_dutch = mean(diff(locs));
+zeta_sp = zeta_lon(4)
+zeta_ph = zeta_lon(1);
+zeta_spir = zeta_lat(1);
+zeta_ap = zeta_lat(2);
+zeta_dr = zeta_lat(4);
 
-
-
+% short period
+% period_sp = 2*pi/cmpx
+% time_to_05_sp = log(0.5)/rel
 
 %% Pitch rate command controller design task
 %%
