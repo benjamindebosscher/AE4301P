@@ -248,6 +248,7 @@ t = 0:0.01:19.99;
 % placing poles to 2 state system
 A_long_red_ac_77 = A_long_red_ac_7 - B_long_red_ac_7*K;
 SS_long_lo_red_ac_77 = ss(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
+tf_77 = ss2tf(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7tf_77);
 
 % response of q
 lsim(SS_long_lo_red_ac_77, u, t)
