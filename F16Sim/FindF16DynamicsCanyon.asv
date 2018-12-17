@@ -392,13 +392,13 @@ xlabel('Time [s]','Fontsize',15)
 ylabel('Pitch Rate [rad/s]','Fontsize',15)
 set(gca,'Fontsize',15)
 
-figure(6);
-plot(output_x(:,2),output_href(:,2)*0.3048)
+figure(1);
+plot(output_h(:,1),output_h(:,2))
 hold on;
-area(output_x(:,2),output_href(:,2)*0.3048-40)
-axis([0 6900 1200 1600])
-title('Altitude Profile','Fontsize',20)
-xlabel('Horizontal Distance [m]','Fontsize',15)
-ylabel('Altitude [m]','Fontsize',15)
+plot(output_href(:,1),output_href(:,2))
+xlim([0 75])
+title('Comparison between the Reference Altitude and the Actual Altitude','Fontsize',20)
+xlabel('Time [s]','Fontsize',15)
+ylabel('Altitude [ft]','Fontsize',15)
 set(gca,'Fontsize',15)
-legend('Reference Altitude','Ground Surface')
+legend('Actual Altitude','Reference Altitude')
