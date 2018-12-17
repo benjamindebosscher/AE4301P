@@ -21,7 +21,7 @@ newline = sprintf('\n');
 %%
 % to be replaced by input in final
 altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
+velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -191,6 +191,16 @@ sys_lat_lo = pck(A_lateral_lo, B_lateral_lo, C_lateral_lo, D_lateral_lo);
 long_poles_lo = spoles(sys_long_lo);
 lat_poles_lo = spoles(sys_lat_lo);
 
+
+%% Responses & Period and T_1/2
+%%
+long_resp = impulse(SS_long_lo_red_ac);
+lat_resp = impulse(SS_lat_lo_red_ac);
+
+% period_sp = seqperiod(long_resp(:,2))
+% period_phugoid = seqperiod(long_resp(:,2))
+% period_dutch = seqperiod(lat_resp(:,2))
+
 %% Pitch rate command controller design task
 %%
 v_ms = velocity*0.3048;                % velocity in m/s
@@ -221,7 +231,7 @@ u1 = ones(1,1000);
 u = [u1 u0];
 t = 0:0.01:19.99;
 
-% adding poles to system
+% placing poles to 2 state system
 A_long_red_ac_77 = A_long_red_ac_7 - B_long_red_ac_7*K;
 SS_long_lo_red_ac_77 = ss(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
 
