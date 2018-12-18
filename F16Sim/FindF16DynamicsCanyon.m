@@ -350,15 +350,17 @@ sim('canyongenerator')
 
 % Plotting
 figure(1);
-plot(output_h(:,1),output_h(:,2))
+plot(output_h(:,1),output_h(:,2)*.3048)
 hold on;
-plot(output_href(:,1),output_href(:,2))
-xlim([0 75])
+plot(output_href(:,1),output_href(:,2)*.3048)
+hold on;
+area(output_href(:,1),output_href(:,2)*0.3048-40)
+axis([0 75 1250 1600])
 title('Comparison between the Reference Altitude and the Actual Altitude','Fontsize',20)
 xlabel('Time [s]','Fontsize',15)
-ylabel('Altitude [ft]','Fontsize',15)
+ylabel('Altitude [m]','Fontsize',15)
 set(gca,'Fontsize',15)
-legend('Actual Altitude','Reference Altitude')
+legend('Actual Altitude','Reference Altitude','Ground Surface')
 
 figure(2);
 plot(output_theta(:,1),output_theta(:,2))
