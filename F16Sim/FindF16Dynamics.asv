@@ -247,8 +247,8 @@ time_to_05_spir = log(0.5)/real(pole_spir);
 
 plot_switch = 4;
 % short period response
-if plot_switch == 1
-    subplot(4,1,1);
+figure(1)    
+subplot(4,1,1);
     plot(t_lon(1:30), y_lon(1:30,1))
     % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('Velocity in [ft/s]', 'FontSize', 12,'FontWeight', 'bold')
@@ -335,8 +335,8 @@ elseif plot_switch == 4
     ylabel('r in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
     
 % spiral response
-elseif plot_switch == 5
-    subplot(4,1,1);
+figure()
+subplot(4,1,1);
     plot(t_lat, y_lat(:,1,1))
     % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('\beta in [deg]', 'FontSize', 12,'FontWeight', 'bold')
@@ -355,7 +355,7 @@ elseif plot_switch == 5
     plot(t_lat, y_lat(:,4,1))
     xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('r in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
-end
+
 
 
 %% Pitch rate command controller design task
@@ -407,15 +407,27 @@ K = 1.7087;
 prefilter = K*(T1/T)*(T*s+1)/(T1*s+1);
 comp = minreal(prefilter*tf_77(2),0.00005);
 
+%% Response of q
+%%
 [y] = lsim(comp, u, t);
 plot(t, y)
 hold on 
 plot(t, u)
 hold off
 legend('Time response', 'Step input')
-xlabel('Time [x]')
+xlabel('Time [s]')
 ylabel('Pitch rate q [deg/s]')
 
+%% Response of \theta
+%% 
+z = 0.01*cumtrapz(lsim(comp, u, t));
+plot(t, z)
+hold on 
+plot(t, u)
+hold off
+legend('Time response', 'Step input')
+xlabel('Time [s]')
+ylabel('Pitch attitude angle [deg]')
 % tf_77 = ss2tf(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7tf_77);
 
 % response of q
