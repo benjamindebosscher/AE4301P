@@ -371,7 +371,7 @@ ylabel('Theta [deg]','Fontsize',15)
 set(gca,'Fontsize',15)
 
 figure(3);
-plot(output_Vt(:,1),output_Vt(:,2))
+plot(output_Vt(:,1),output_Vt(:,2)+300)
 xlim([0 75])
 title('True Velocity during the Manoeuvre','Fontsize',20)
 xlabel('Time [s]','Fontsize',15)
@@ -391,7 +391,7 @@ plot(output_q(:,1),output_q(:,2))
 xlim([0 75])
 title('Pitch Rate during the Manoeuvre','Fontsize',20)
 xlabel('Time [s]','Fontsize',15)
-ylabel('Pitch Rate [rad/s]','Fontsize',15)
+ylabel('Pitch Rate [deg/s]','Fontsize',15)
 set(gca,'Fontsize',15)
 
 figure(6);
@@ -404,3 +404,11 @@ xlabel('Horizontal Distance [m]','Fontsize',15)
 ylabel('Altitude [m]','Fontsize',15)
 set(gca,'Fontsize',15)
 legend('Reference Altitude','Ground Surface')
+
+figure(7);
+plot(output_href(:,1),(output_h(:,2)*.3048-(output_href(:,2)*0.3048-40))-40)
+axis([0 75 -20 20])
+title('Deviation from the Reference Altitude','Fontsize',20)
+xlabel('Time [s]','Fontsize',15)
+ylabel('Deviation [m]','Fontsize',15)
+set(gca,'Fontsize',15)
