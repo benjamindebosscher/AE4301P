@@ -403,13 +403,36 @@ desired = (K(2)*(1+T*s))/(s^2 + 2*damping*omega_n_sp*s + omega_n_sp^2);
 
 T1 = -2.183/-0.6606;
 K = 1.7087;
-prefilter = K*(T1/T)*(T*s+1)/(T1*s+1);
-comp = minreal(prefilter*tf_77(2),0.005);
 
+prefilter = K*(T1/T)*(T*s+1)/(T1*s+1);
+comp = minreal(prefilter*tf_77(2),0.00005);
+
+%% Response of q
+%%
+[y] = lsim(comp, u, t);
+plot(t, y)
+hold on 
+plot(t, u)
+hold off
+legend('Time response', 'Step input')
+xlabel('Time [s]')
+ylabel('Pitch rate q [deg/s]')
+
+%% Response of \theta
+%% 
+z = 0.01*cumtrapz(lsim(comp, u, t));
+plot(t, z)
+hold on 
+plot(t, u)
+hold off
+legend('Time response', 'Step input')
+xlabel('Time [s]')
+ylabel('Pitch attitude angle [deg]')
 % tf_77 = ss2tf(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7tf_77);
 
 % response of q
 %lsim(SS_long_lo_red_ac_77, u, t)
+
 
 % response of theta in blue
 %plot(0.01*cumtrapz(lsim(SS_long_lo_red_ac_77, u, t)))
