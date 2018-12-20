@@ -21,7 +21,7 @@ newline = sprintf('\n');
 %%
 % to be replaced by input in final
 altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 600 %input('Enter the velocity for the simulation (ft/s):  ');
+velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
@@ -238,8 +238,14 @@ time_to_05_ap = log(0.5)/real(pole_ap);
 % spiral
 time_to_05_spir = log(0.5)/real(pole_spir);
 
+% % inputs
+time = 0:0.1:1000;
+u_lon = zeros(length(time), 2);
+u_lon(1:5,2) = 0.4363;
+
 % longitudinal responses
-[y_lon,t_lon,x_lon] = impulse(SS_long_lo);
+[y_lon,t_lon,x_lon] = lsim(SS_long_lo, u_lon, time);
+% [y_lon,t_lon,x_lon] = step(SS_long_lo);
 
 % lateral responses
 [y_lat,t_lat,x_lat] = impulse(SS_lat_lo);
@@ -254,25 +260,25 @@ if plot_switch == true
     %%
     figure(1)    
     subplot(4,1,1);
-    plot(t_lon(1:30), y_lon(1:30,3,2))
+    plot(t_lon(1:150), y_lon(1:150,3))
     % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('Velocity in [ft/s]', 'FontSize', 12,'FontWeight', 'bold')
     set(gca, 'FontSize', 16)
 
     subplot(4,1,2);
-    plot(t_lon(1:30), y_lon(1:30,4,2))
+    plot(t_lon(1:150), y_lon(1:150,4))
     % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('\alpha in [deg]', 'FontSize', 12,'FontWeight','bold')
     set(gca, 'FontSize', 16)
 
     subplot(4,1,3);
-    plot(t_lon(1:30), y_lon(1:30,2,2))
+    plot(t_lon(1:150), y_lon(1:150,2))
     % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('\theta in [deg]', 'FontSize', 12,'FontWeight', 'bold')
     set(gca, 'FontSize', 16)
 
     subplot(4,1,4);
-    plot(t_lon(1:30), y_lon(1:30,5,2))
+    plot(t_lon(1:150), y_lon(1:150,5))
     xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('q in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
     set(gca, 'FontSize', 16)
@@ -281,25 +287,25 @@ if plot_switch == true
     %%
     figure(2)    
     subplot(4,1,1);
-    plot(t_lon, y_lon(:,3,2))
+    plot(t_lon, y_lon(:,3))
     % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('Velocity in [ft/s]', 'FontSize', 12,'FontWeight', 'bold')
     set(gca, 'FontSize', 16)
 
     subplot(4,1,2);
-    plot(t_lon, y_lon(:,4,2))
+    plot(t_lon, y_lon(:,4))
     % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('\alpha in [deg]', 'FontSize', 12,'FontWeight','bold')
     set(gca, 'FontSize', 16)
 
     subplot(4,1,3);
-    plot(t_lon, y_lon(:,2,2))
+    plot(t_lon, y_lon(:,2))
     % xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('\theta in [deg]', 'FontSize', 12,'FontWeight', 'bold')
     set(gca, 'FontSize', 16)
 
     subplot(4,1,4);
-    plot(t_lon, y_lon(:,5,2))
+    plot(t_lon, y_lon(:,5))
     xlabel('Time in [s]', 'FontSize', 12,'FontWeight', 'bold')
     ylabel('q in [deg/s]', 'FontSize', 12,'FontWeight', 'bold')
     set(gca, 'FontSize', 16)
