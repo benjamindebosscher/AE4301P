@@ -19,17 +19,17 @@ newline = sprintf('\n');
 
 %% Trim aircraft to desired altitude and velocity
 %%
-% to be replaced by input in final
-altitude = 20000 %input('Enter the altitude for the simulation (ft)  :  ');
-velocity = 300 %input('Enter the velocity for the simulation (ft/s):  ');
+
+altitude = input('Enter the altitude for the simulation (ft)  :  ');
+velocity = input('Enter the velocity for the simulation (ft/s):  ');
 
 %% Initial guess for trim
 %%
-thrust = 5000;          % thrust, lbs
-elevator = -0.09;       % elevator, degrees
-alpha = 8.49;              % AOA, degrees
-rudder = -0.01;             % rudder angle, degrees
-aileron = 0.01;            % aileron, degrees
+thrust = 5000;                  % thrust, lbs
+elevator = -0.09;               % elevator, degrees
+alpha = 8.49;                   % AOA, degrees
+rudder = -0.01;             	% rudder angle, degrees
+aileron = 0.01;                 % aileron, degrees
 
 %% Find trim for Hifi model at desired altitude and velocity
 %%
@@ -121,6 +121,7 @@ ylabel('Pitch rate q [deg/s]');
 stepplot(-SS_long_lo_red_ac_7([2]),-SS_long_lo_red([4]),100);
 legend('2 state model', '4 state model');
 ylabel('Pitch rate q [deg/s]');
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Lateral Directional %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -242,6 +243,7 @@ time_to_05_spir = log(0.5)/real(pole_spir);
 time = 0:0.1:1000;
 u_lon = zeros(length(time), 2);
 u_lon(1:5,2) = 0.4363;
+
 
 u_lat = zeros(length(time), 3);
 u_lat(1:5,3) = deg2rad(1);
@@ -431,14 +433,10 @@ t = 0:0.01:19.99;
 A_long_red_ac_77 = A_long_red_ac_7 - B_long_red_ac_7*K;
 SS_long_lo_red_ac_77 = ss(A_long_red_ac_77, B_long_red_ac_7, C_long_red_ac_7, D_long_red_ac_7);
 
-
 tf_77 = tf(SS_long_lo_red_ac_77);
-
 s = tf('s');
-
 T = time_c;
 desired = (K(2)*(1+T*s))/(s^2 + 2*damping*omega_n_sp*s + omega_n_sp^2);
-
 
 T1 = -2.183/-0.6606;
 K = 1.7087;
